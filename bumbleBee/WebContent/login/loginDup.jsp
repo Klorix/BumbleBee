@@ -49,8 +49,8 @@
 	                </div>
 	            </div>
            </form>
-            <form action="<%=request.getContextPath()%>/register" method="POST">
-            <div class="row"
+            <form action="<%=request.getContextPath()%>/registerCustomer" method="GET">
+            	<div class="row"
 	                 style="position:absolute;top: 75%;left: 0;right: 0;margin: auto;width: 200px;height: 40px;">
 	                <div class="col-12">
 	                    <a href="#" id="signupBtnInLogin">
