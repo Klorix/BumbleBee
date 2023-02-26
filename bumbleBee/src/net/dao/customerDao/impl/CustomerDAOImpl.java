@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 import net.dao.customerDao.CustomerDao;
 import net.model.Customer;
-import net.model.User;
 import net.utils.JDBCUtils;
 
 public class CustomerDAOImpl implements CustomerDao{

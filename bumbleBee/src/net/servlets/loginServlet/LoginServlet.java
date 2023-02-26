@@ -10,18 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.dao.LoginDao;
-import net.model.LoginBean;
 
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private LoginDao loginDao;
-
-	public void init() {
-		loginDao = new LoginDao();
-	}
+//	private LoginDao loginDao;
+//
+//	public void init() {
+//		loginDao = new LoginDao();
+//	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
