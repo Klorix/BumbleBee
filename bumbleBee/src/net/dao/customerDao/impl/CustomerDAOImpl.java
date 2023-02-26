@@ -2,16 +2,20 @@ package net.dao.customerDao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.dao.customerDao.CustomerDao;
 import net.model.Customer;
+import net.model.Item;
 import net.utils.JDBCUtils;
 
 public class CustomerDAOImpl implements CustomerDao{
 
 	@Override
-	public boolean saveCustmoer(Customer c) throws ClassNotFoundException {
+	public boolean saveCustomer(Customer c) throws ClassNotFoundException {
 			String INSERT_USERS_SQL = "INSERT INTO Customer"
 					+ "  (customerId,customerName,customerDOB,customerContactNumber,customerUserName,password,customerAddress) VALUES "
 					+ " (?,?,?,?,?,?,?);";
@@ -38,7 +42,7 @@ public class CustomerDAOImpl implements CustomerDao{
 	}
 
 	@Override
-	public boolean updateCustmoer(Customer c) throws ClassNotFoundException {
+	public boolean updateCustomer(Customer c) throws ClassNotFoundException {
 		try (Connection connection = JDBCUtils.getConnection();
 				// Step 2:Create a statement using connection object
 				PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Customer SET customerName=?,customerDOB=?,customerContactNumber=?,customerUserName=?,password=?,customerAddress=? WHERE customerId=?")) {
@@ -61,7 +65,7 @@ public class CustomerDAOImpl implements CustomerDao{
 	}
 
 	@Override
-	public boolean deleteCustmoer(String id) throws ClassNotFoundException {
+	public boolean deleteCustomer(String id) throws ClassNotFoundException {
 		try (Connection connection = JDBCUtils.getConnection();
 				// Step 2:Create a statement using connection object
 				PreparedStatement preparedStatement = connection.prepareStatement("DELETE Customer WHERE customerId=?")) {
@@ -75,6 +79,26 @@ public class CustomerDAOImpl implements CustomerDao{
 			JDBCUtils.printSQLException(e);
 		}
 		return false;
+	}
+
+	@Override
+	public List<Customer> getAllCustomers() {
+		try (Connection connection = JDBCUtils.getConnection();
+				// Step 2:Create a statement using connection object
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Customer")) {
+			ResultSet rst = preparedStatement.executeQuery();
+			List<Customer>customers = new ArrayList<>();
+			while(rst.next()) {
+				customers.add(new Customer(rst.getString(1),rst.getString(2),rst.getString(3),rst.getString(4),rst.getString(5),rst.getString(6),rst.getString(7)));
+			}
+			System.out.println(preparedStatement);
+			// Step 3: Execute the query or update query
+			return customers;
+		} catch (SQLException e) {
+			// process sql exception
+			JDBCUtils.printSQLException(e);
+		}
+		return null;
 	}
 
 }

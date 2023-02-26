@@ -1,6 +1,7 @@
 package net.servlets.customerServlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.dao.customerDao.CustomerDao;
 import net.dao.customerDao.impl.CustomerDAOImpl;
 import net.model.Customer;
+import net.model.Item;
 
 @WebServlet("/registerCustomer")
 public class RegisterCustomerServlet extends HttpServlet {
@@ -29,7 +31,9 @@ public class RegisterCustomerServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.sendRedirect("register/register.jsp");
+		getAllCustomers(request);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("customer/customerDetails.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	private void register(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -53,7 +57,7 @@ public class RegisterCustomerServlet extends HttpServlet {
 	    
 	    Customer c = new Customer(signUpId,signUpName,signUpDob,signUpContactNo,signUpUserName,signUpPassword,signUpAddress);
 	    try {
-			if(customerDao.saveCustmoer(c) == true) {
+			if(customerDao.saveCustomer(c) == true) {
 				request.setAttribute("NOTIFICATION", "Customer Registered Successfully!");
 			}
 		} catch (ClassNotFoundException e) {
@@ -62,5 +66,9 @@ public class RegisterCustomerServlet extends HttpServlet {
 		}
 	    RequestDispatcher dispatcher = request.getRequestDispatcher("register/register.jsp");
 		dispatcher.forward(request, response);
+	}
+	public void getAllCustomers(HttpServletRequest request) {
+		List<Customer>customers = customerDao.getAllCustomers();
+		request.setAttribute("customerDetails", customers);
 	}
 }

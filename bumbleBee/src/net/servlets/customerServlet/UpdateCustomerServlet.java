@@ -52,7 +52,7 @@ public class UpdateCustomerServlet extends HttpServlet {
 
 	    Customer c = new Customer(signUpId,signUpName,signUpDob,signUpContactNo,signUpUserName,signUpPassword,signUpAddress);
 	    try {
-			if(customerDao.updateCustmoer(c) == true) {
+			if(customerDao.updateCustomer(c) == true) {
 				request.setAttribute("NOTIFICATION", "Customer Registered Successfully!");
 			}
 		} catch (ClassNotFoundException e) {

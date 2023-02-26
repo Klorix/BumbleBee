@@ -188,13 +188,13 @@
 		                        style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Items</span></a>
 	                   
 	                    </li>
-	                    <li class="nav-item position-relative"><a class="nav-link text-white" href="#" id="Customer"><span
+	                    <li class="nav-item position-relative"><a class="nav-link text-white" href="<%=request.getContextPath()%>/registerCustomer" id="Customer"><span
 	                            style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Customers</span></a>
 	                    </li>
 	                </ul>
 	            </div>
 				<div class="position relative d-flex align-items-center justify-content-center" style="width:10%;height:30px;">
-					<a href="<%=request.getContextPath()%>/register/register.jsp" id="signupBtn" class="d-lg-block position-relative w-50 h-100">
+					<a href="<%=request.getContextPath()%>/customer/register.jsp" id="signupBtn" class="d-lg-block position-relative w-50 h-100">
 	               		 <div class="logout position-absolute text-center w-100 h-100 d-flex align-items-center justify-content-center"">
 		                    <i class="fas fa-user-plus text-white fs-3 position-absolute"></i>
 		                </div>

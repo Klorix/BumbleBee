@@ -36,7 +36,7 @@ public class DeleteCustomerServlet extends HttpServlet {
 		
 		System.out.println(signUpId);
 	    try {
-			if(customerDao.deleteCustmoer(signUpId) == true) {
+			if(customerDao.deleteCustomer(signUpId) == true) {
 				request.setAttribute("NOTIFICATION", "Customer Registered Successfully!");
 			}
 		} catch (ClassNotFoundException e) {
