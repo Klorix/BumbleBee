@@ -12,17 +12,52 @@ public class ItemDaoImpl implements ItemDao{
 
 	@Override
 	public boolean saveItem(Item i) throws ClassNotFoundException{
-		String INSERT_USERS_SQL = "INSERT INTO Product"
-				+ "  (productId,productName,productQty,unitPrice,productStatus) VALUES "
-				+ " (?,?,?,?,?);";
 		try (Connection connection = JDBCUtils.getConnection();
 				// Step 2:Create a statement using connection object
-				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL)) {
+				PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Product (productId,productName,productQty,unitPrice,productStatus) VALUES (?,?,?,?,?);")) {
 			preparedStatement.setString(1, i.getId());
 			preparedStatement.setString(2, i.getName());
 			preparedStatement.setInt(3, i.getQty());
 			preparedStatement.setDouble(4, i.getUnitPrice());
 			preparedStatement.setString(5, i.getStatus());
+			
+			System.out.println(preparedStatement);
+			// Step 3: Execute the query or update query
+			if( preparedStatement.executeUpdate()>0)return true;
+		} catch (SQLException e) {
+			// process sql exception
+			JDBCUtils.printSQLException(e);
+		}
+		return false;
+	}
+
+	@Override
+	public boolean updateItem(Item i) throws ClassNotFoundException {
+		try (Connection connection = JDBCUtils.getConnection();
+				// Step 2:Create a statement using connection object
+				PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Product SET productName=?,productQty=?,unitPrice=?,productStatus=? WHERE productId=?;")) {
+			preparedStatement.setString(1, i.getName());
+			preparedStatement.setInt(2, i.getQty());
+			preparedStatement.setDouble(3, i.getUnitPrice());
+			preparedStatement.setString(4, i.getStatus());
+			preparedStatement.setString(5, i.getId());
+			
+			System.out.println(preparedStatement);
+			// Step 3: Execute the query or update query
+			if( preparedStatement.executeUpdate()>0)return true;
+		} catch (SQLException e) {
+			// process sql exception
+			JDBCUtils.printSQLException(e);
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteItem(String itemId) throws ClassNotFoundException {
+		try (Connection connection = JDBCUtils.getConnection();
+				// Step 2:Create a statement using connection object
+				PreparedStatement preparedStatement = connection.prepareStatement("DELETE Product where productId=?")) {
+			preparedStatement.setString(1, itemId);
 			
 			System.out.println(preparedStatement);
 			// Step 3: Execute the query or update query
