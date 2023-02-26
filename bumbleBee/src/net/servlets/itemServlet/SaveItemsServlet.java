@@ -12,16 +12,19 @@ import javax.servlet.http.HttpServletResponse;
 import net.dao.UserDao;
 import net.dao.customerDao.CustomerDao;
 import net.dao.customerDao.impl.CustomerDAOImpl;
+import net.dao.itemDao.ItemDao;
+import net.dao.itemDao.impl.ItemDaoImpl;
 import net.model.Customer;
+import net.model.Item;
 import net.model.User;
 
 @WebServlet("/saveItems")
 public class SaveItemsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private CustomerDao customerDao;
+	private ItemDao itemDao;
 
 	public void init() {
-		customerDao = new CustomerDAOImpl();
+		itemDao = new ItemDaoImpl();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -37,8 +40,8 @@ public class SaveItemsServlet extends HttpServlet {
 	private void register(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		String id = request.getParameter("productIdInManageItems");
 		String name = request.getParameter("productNameInManageItems");
-		String qty = request.getParameter("productQtyInManageItems");
-		String unitPrice = request.getParameter("productUnitPriceInManageItems");
+		int qty = Integer.parseInt(request.getParameter("productQtyInManageItems"));
+		double unitPrice = Double.parseDouble(request.getParameter("productUnitPriceInManageItems"));
 		String status = request.getParameter("productStatusInManageItems");
 		
 		System.out.println(id);
@@ -47,16 +50,16 @@ public class SaveItemsServlet extends HttpServlet {
 		System.out.println(unitPrice);
 		System.out.println(status);
  
-	    Customer c = new Customer(signUpId,signUpName,signUpDob,signUpContactNo,signUpUserName,signUpPassword,signUpAddress);
+	    Item i = new Item(id,name,qty,unitPrice,status);
 	    try {
-			if(customerDao.saveCustmoer(c) == true) {
-				request.setAttribute("NOTIFICATION", "Customer Registered Successfully!");
+			if(itemDao.saveItem(i) == true) {
+				request.setAttribute("NOTIFICATION", "Item Saved Successfully!");
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    RequestDispatcher dispatcher = request.getRequestDispatcher("register/register.jsp");
+	    RequestDispatcher dispatcher = request.getRequestDispatcher("item/manageItem.jsp");
 		dispatcher.forward(request, response);
 	}
 }
