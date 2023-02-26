@@ -30,7 +30,7 @@
 	<body>
 		<jsp:include page="../common/adminHeader.jsp"></jsp:include>
 		<section class="ManageItems container-fluid position-relative d-flex align-items-center justify-content-center"
-	             style="width: 100%;height: 95vh;background-color: rgb(226, 226, 226);top:0;" id="manageItemsSection">
+	             style="width: 100%;height: 95vh;top:0;" id="manageItemsSection">
 	        <div class="row position-relative d-flex" style="width: 100%;height:90%;">
 	        	<form class="row container position-relative" style="top: 0;left: 0;right:0;margin: auto; width: 80%;height:30%;">
 	        		<div class="row container position-relative" style="top: 0;left: 0;right:0;margin: auto; width: 100%;height:100%;">
