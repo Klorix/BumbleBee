@@ -9,14 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.dao.UserDao;
-import net.dao.customerDao.CustomerDao;
-import net.dao.customerDao.impl.CustomerDAOImpl;
 import net.dao.itemDao.ItemDao;
 import net.dao.itemDao.impl.ItemDaoImpl;
-import net.model.Customer;
 import net.model.Item;
-import net.model.User;
 
 @WebServlet("/saveItems")
 public class SaveItemsServlet extends HttpServlet {
