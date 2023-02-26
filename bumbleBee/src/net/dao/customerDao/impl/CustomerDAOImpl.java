@@ -41,7 +41,7 @@ public class CustomerDAOImpl implements CustomerDao{
 	public boolean updateCustmoer(Customer c) throws ClassNotFoundException {
 		try (Connection connection = JDBCUtils.getConnection();
 				// Step 2:Create a statement using connection object
-				PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Customer SET customerName=?,customerDOB=?,customerContactNumber=?,customerUserName=?,password=?,customerAddress=? WHERE customerId=?")) {]
+				PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Customer SET customerName=?,customerDOB=?,customerContactNumber=?,customerUserName=?,password=?,customerAddress=? WHERE customerId=?")) {
 			preparedStatement.setString(1, c.getSignUpName());
 			preparedStatement.setString(2, c.getSignUpDob());
 			preparedStatement.setString(3, c.getSignUpContactNo());
