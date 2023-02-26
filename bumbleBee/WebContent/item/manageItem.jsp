@@ -36,23 +36,23 @@
 	                        <div class="col-6 col-sm-6 col-md position-relative">
 	                            <div class="form-floating position-relative">
 	                                <input type="text" class="form-control bg-transparent border-3 w-100"
-	                                       id="itemCodeInItems" placeholder="code" style="height: 40px;">
-	                                <label for="itemCodeInItems" id="itemCodeLblInItems"><span>Code</span></label>
+	                                       id="productIdInManageItems" name="productIdInManageItems" placeholder="Product ID" style="height: 40px;">
+	                                <label for="productIdInManageItems" id="itemCodeLblInItems"><span>Product ID</span></label>
 	                            </div>
 	                        </div>
 	                        <div class="col-6 col-sm-6 col-md">
 	                            <div class="form-floating position-relative">
 	                                <input type="text" class="form-control bg-transparent border-3 w-100"
-	                                       id="itemDescriptionInItems" placeholder="Description" style="height: 40px;">
-	                                <label for="itemDescriptionInItems"
-	                                       id="itemDescriptionLblInItems"><span>Description</span></label>
+	                                       id="productNameInManageItems" name="productNameInManageItems" placeholder="Product Name" style="height: 40px;">
+	                                <label for="productNameInManageItems"
+	                                       id="itemDescriptionLblInItems"><span>Product Name</span></label>
 	                            </div>
 	                        </div>
 	                        <div class="col">
 	                            <div class="form-floating position-relative">
 	                                <input type="text" class="form-control bg-transparent border-3 w-100"
-	                                       id="itemQtyInItems" placeholder="Qty" style="height: 40px;">
-	                                <label for="itemQtyInItems" id="itemQtyLblInItems"><span>Qty</span></label>
+	                                       id="productQtyInManageItems" name="productQtyInManageItems" placeholder="Qty" style="height: 40px;">
+	                                <label for="productQtyInManageItems" id="itemQtyLblInItems"><span>Qty</span></label>
 	                            </div>
 	                        </div>
 	                    </div>
@@ -60,25 +60,17 @@
 	                        <div class="col-6 col-sm">
 	                            <div class="form-floating position-relative">
 	                                <input type="text" class="form-control bg-transparent border-3 w-100"
-	                                       id="itemBuyingPriceInItems" placeholder="Buying Price" style="height: 40px;">
-	                                <label for="itemBuyingPriceInItems"
-	                                       id="itemBuyingPriceLblInItems"><span>Buying Price</span></label>
+	                                       id="productUnitPriceInManageItems" name="productUnitPriceInManageItems" placeholder="Unit Price" style="height: 40px;">
+	                                <label for="productUnitPriceInManageItems"
+	                                       id="itemUnitPriceLblInItems"><span>Unit Price</span></label>
 	                            </div>
 	                        </div>
 	                        <div class="col-6 col-sm">
 	                            <div class="form-floating position-relative">
 	                                <input type="text" class="form-control bg-transparent border-3 w-100"
-	                                       id="itemUnitPriceInItems" placeholder="Unit Price" style="height: 40px;">
-	                                <label for="itemUnitPriceInItems"
-	                                       id="itemUnitPriceLblInItems"><span>Unit Price</span></label>
-	                            </div>
-	                        </div>
-	                        <div class="col">
-	                            <div class="form-floating position-relative">
-	                                <input type="text" class="form-control bg-transparent border-3 w-100"
-	                                       id="itemDiscountInItems" placeholder="Discount" style="height: 40px;">
-	                                <label for="itemDiscountInItems"
-	                                       id="itemDiscountLblInItems"><span>Discount</span></label>
+	                                       id="productStatusInManageItems" name="productStatusInManageItems" placeholder="Unit Price" style="height: 40px;">
+	                                <label for="productStatusInManageItems"
+	                                       id="itemUnitPriceLblInItems"><span>Product Status</span></label>
 	                            </div>
 	                        </div>
 	                    </div>

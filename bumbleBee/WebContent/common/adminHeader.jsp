@@ -143,7 +143,7 @@
 	            <div class="collapse navbar-collapse position-relative" id="navbarText">
 	                <ul class="position-absolute navbar-nav flex-row w-100 justify-content-start fs-6 px-4"
 	                    style="left:200px;">
-	                    <li class="nav-item position-relative"><a class="nav-link text-white" href="#" id="Home"><span
+	                    <li class="nav-item position-relative"><a class="nav-link text-white" href="<%=request.getContextPath()%>/admin/adminDashboard.jsp" id="Home"><span
 	                            style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Home</span></a>
 	                    </li>
 	                    <li class="nav-item position-relative"><a class="nav-link text-white" href="#" id="Orders"><span
