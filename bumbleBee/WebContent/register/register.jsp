@@ -134,7 +134,7 @@
  <main>
 	<section id="signupSection" class="Signup container-fluid position-relative" >
 		<div class="container-fluid position-absolute shadow">
-			<a href="<%=request.getContextPath()%>/login/loginDup.jsp" id="logoutBtnInSignup" style="width:5%;height:80%;top:0;bottom:0;margin:auto;right:2%;position:absolute">
+			<a href="<%=request.getContextPath()%>/login/login.jsp" id="logoutBtnInSignup" style="width:5%;height:80%;top:0;bottom:0;margin:auto;right:2%;position:absolute">
 	            <div class="logout position-absolute d-block d-lg-block position-relative w-100 h-100" >
 	                <i class="fas fa-sign-out-alt text-black fs-1 position-absolute"></i>
 	            </div>

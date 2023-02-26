@@ -62,7 +62,7 @@ public class TodoController extends HttpServlet {
 				listTodo(request, response);
 				break;
 			default:
-				RequestDispatcher dispatcher = request.getRequestDispatcher("login/loginDup.jsp");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("login/login.jsp");
 				dispatcher.forward(request, response);
 				break;
 			}
