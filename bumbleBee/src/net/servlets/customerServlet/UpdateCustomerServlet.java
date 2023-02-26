@@ -1,6 +1,7 @@
 package net.servlets.customerServlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.dao.customerDao.CustomerDao;
 import net.dao.customerDao.impl.CustomerDAOImpl;
 import net.model.Customer;
+import net.model.Item;
 @WebServlet("/updateCustomer")
 public class UpdateCustomerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -60,4 +62,5 @@ public class UpdateCustomerServlet extends HttpServlet {
 	    RequestDispatcher dispatcher = request.getRequestDispatcher("register/register.jsp");
 		dispatcher.forward(request, response);
 	}
+	
 }

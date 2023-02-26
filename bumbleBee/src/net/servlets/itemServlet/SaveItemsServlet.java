@@ -1,6 +1,7 @@
 package net.servlets.itemServlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,7 +30,9 @@ public class SaveItemsServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.sendRedirect("register/register.jsp");
+		getAllItems(request);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("item/manageItem.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	private void register(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -49,6 +52,7 @@ public class SaveItemsServlet extends HttpServlet {
 	    try {
 			if(itemDao.saveItem(i) == true) {
 				request.setAttribute("NOTIFICATION", "Item Saved Successfully!");
+				getAllItems(request);
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -56,5 +60,9 @@ public class SaveItemsServlet extends HttpServlet {
 		}
 	    RequestDispatcher dispatcher = request.getRequestDispatcher("item/manageItem.jsp");
 		dispatcher.forward(request, response);
+	}
+	public void getAllItems(HttpServletRequest request) {
+		List<Item>items = itemDao.getAllItems();
+		request.setAttribute("itemDetails", items);
 	}
 }

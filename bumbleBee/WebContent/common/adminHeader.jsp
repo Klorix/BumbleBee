@@ -20,6 +20,41 @@
 			    box-shadow: 0px 1px 10px 1px;
 			}
 			
+			
+			/* --- */
+			body>header>nav ul>form>li {
+			    width: 102px;
+			    transition: all 0.5s;
+			    text-align: center;
+			}
+			
+			body>header>nav ul>form>li a {
+			    position: relative;
+			    width: 100%;
+			    height: 35px;
+			    border-radius: 30px;
+			    transition: all 0.5s;
+			}
+			
+			body>header>nav ul>form>li a span {
+			    position: absolute;
+			    top: 0;
+			    bottom: 0;
+			    left: 0;
+			    right: 0;
+			    margin: auto;
+			    height: max-content;
+			    width: max-content;
+			}
+			
+			body>header>nav ul>form>li:hover a {
+			    background-color: rgb(143, 141, 141);
+			    border-radius: 30px;
+			    transition: all 0.5s;
+			}
+			
+			/* -- */
+			
 			body>header>nav ul>li {
 			    width: 102px;
 			    transition: all 0.5s;
@@ -149,8 +184,9 @@
 	                    <li class="nav-item position-relative"><a class="nav-link text-white" href="#" id="Orders"><span
 	                            style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Orders</span></a>
 	                    </li>
-	                    <li class="nav-item position-relative"><a class="nav-link text-white" href="<%=request.getContextPath()%>/item/manageItem.jsp" id="Items"><span
-	                            style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Items</span></a>
+	                    <li class="nav-item position-relative" ><a class="nav-link text-white" id="Items" href="<%=request.getContextPath()%>/saveItem"><span
+		                        style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Items</span></a>
+	                   
 	                    </li>
 	                    <li class="nav-item position-relative"><a class="nav-link text-white" href="#" id="Customer"><span
 	                            style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Customers</span></a>

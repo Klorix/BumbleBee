@@ -89,4 +89,12 @@ public class Order {
 	private void setOrderDetails(ArrayList <OrderDetails> orderDetails) {
 		this.orderDetails = orderDetails;
 	}
+
+	@Override
+	public String toString() {
+		return "Order [orderId=" + orderId + ", orderDate=" + orderDate + ", customerId=" + customerId + ", loanAmount="
+				+ loanAmount + ", paidAmount=" + paidAmount + ", orderStatus=" + orderStatus + ", orderDetails="
+				+ orderDetails + "]";
+	}
+	
 }

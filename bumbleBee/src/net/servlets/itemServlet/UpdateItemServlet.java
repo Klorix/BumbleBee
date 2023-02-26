@@ -1,6 +1,7 @@
 package net.servlets.itemServlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -49,6 +50,7 @@ public class UpdateItemServlet extends HttpServlet {
 	    try {
 			if(itemDao.updateItem(i) == true) {
 				request.setAttribute("NOTIFICATION", "Item Updated Successfully!");
+				getAllItems(request);
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -56,5 +58,9 @@ public class UpdateItemServlet extends HttpServlet {
 		}
 	    RequestDispatcher dispatcher = request.getRequestDispatcher("item/manageItem.jsp");
 		dispatcher.forward(request, response);
+	}
+	public void getAllItems(HttpServletRequest request) {
+		List<Item>items = itemDao.getAllItems();
+		request.setAttribute("itemDetails", items);
 	}
 }

@@ -2,7 +2,10 @@ package net.dao.itemDao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.dao.itemDao.ItemDao;
 import net.model.Item;
@@ -14,7 +17,7 @@ public class ItemDaoImpl implements ItemDao{
 	public boolean saveItem(Item i) throws ClassNotFoundException{
 		try (Connection connection = JDBCUtils.getConnection();
 				// Step 2:Create a statement using connection object
-				PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Product (productId,productName,productQty,unitPrice,productStatus) VALUES (?,?,?,?,?);")) {
+				PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Product (productId,productName,qtyOnHand,unitPrice,productStatus) VALUES (?,?,?,?,?);")) {
 			preparedStatement.setString(1, i.getId());
 			preparedStatement.setString(2, i.getName());
 			preparedStatement.setInt(3, i.getQty());
@@ -35,7 +38,7 @@ public class ItemDaoImpl implements ItemDao{
 	public boolean updateItem(Item i) throws ClassNotFoundException {
 		try (Connection connection = JDBCUtils.getConnection();
 				// Step 2:Create a statement using connection object
-				PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Product SET productName=?,productQty=?,unitPrice=?,productStatus=? WHERE productId=?;")) {
+				PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Product SET productName=?,qtyOnHand=?,unitPrice=?,productStatus=? WHERE productId=?;")) {
 			preparedStatement.setString(1, i.getName());
 			preparedStatement.setInt(2, i.getQty());
 			preparedStatement.setDouble(3, i.getUnitPrice());
@@ -67,6 +70,26 @@ public class ItemDaoImpl implements ItemDao{
 			JDBCUtils.printSQLException(e);
 		}
 		return false;
+	}
+
+	@Override
+	public List<Item> getAllItems() {
+		try (Connection connection = JDBCUtils.getConnection();
+				// Step 2:Create a statement using connection object
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Product")) {
+			ResultSet rst = preparedStatement.executeQuery();
+			List<Item>items = new ArrayList<>();
+			while(rst.next()) {
+				items.add(new Item(rst.getString(1),rst.getString(2),rst.getInt(3),rst.getDouble(4),rst.getString(5)));
+			}
+			System.out.println(preparedStatement);
+			// Step 3: Execute the query or update query
+			return items;
+		} catch (SQLException e) {
+			// process sql exception
+			JDBCUtils.printSQLException(e);
+		}
+		return null;
 	}
 
 }

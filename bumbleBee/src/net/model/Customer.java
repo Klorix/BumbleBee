@@ -108,5 +108,13 @@ public class Customer {
 	private void setLoanAmount(String loanAmount) {
 		this.loanAmount = loanAmount;
 	}
+
+	@Override
+	public String toString() {
+		return "Customer [signUpId=" + signUpId + ", signUpName=" + signUpName + ", signUpDob=" + signUpDob
+				+ ", signUpContactNo=" + signUpContactNo + ", signUpUserName=" + signUpUserName + ", signUpPassword="
+				+ signUpPassword + ", signUpAddress=" + signUpAddress + ", loanStatus=" + loanStatus + ", loanAmount="
+				+ loanAmount + "]";
+	}
 	
 }

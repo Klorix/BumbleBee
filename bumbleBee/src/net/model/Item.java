@@ -56,4 +56,11 @@ public class Item {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	@Override
+	public String toString() {
+		return "Item [id=" + id + ", name=" + name + ", qty=" + qty + ", unitPrice=" + unitPrice + ", status=" + status
+				+ "]";
+	}
+	
 }
