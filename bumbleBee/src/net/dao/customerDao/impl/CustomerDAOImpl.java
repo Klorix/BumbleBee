@@ -37,4 +37,44 @@ public class CustomerDAOImpl implements CustomerDao{
 			return false;
 	}
 
+	@Override
+	public boolean updateCustmoer(Customer c) throws ClassNotFoundException {
+		try (Connection connection = JDBCUtils.getConnection();
+				// Step 2:Create a statement using connection object
+				PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Customer SET customerName=?,customerDOB=?,customerContactNumber=?,customerUserName=?,password=?,customerAddress=? WHERE customerId=?")) {]
+			preparedStatement.setString(1, c.getSignUpName());
+			preparedStatement.setString(2, c.getSignUpDob());
+			preparedStatement.setString(3, c.getSignUpContactNo());
+			preparedStatement.setString(4, c.getSignUpUserName());
+			preparedStatement.setString(5, c.getSignUpPassword());
+			preparedStatement.setString(6, c.getSignUpAddress());
+			preparedStatement.setString(7, c.getSignUpId());		
+
+			System.out.println(preparedStatement);
+			// Step 3: Execute the query or update query
+			if( preparedStatement.executeUpdate()>0)return true;
+		} catch (SQLException e) {
+			// process sql exception
+			JDBCUtils.printSQLException(e);
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteCustmoer(String id) throws ClassNotFoundException {
+		try (Connection connection = JDBCUtils.getConnection();
+				// Step 2:Create a statement using connection object
+				PreparedStatement preparedStatement = connection.prepareStatement("DELETE Customer WHERE customerId=?")) {
+			preparedStatement.setString(1, id);
+			
+			System.out.println(preparedStatement);
+			// Step 3: Execute the query or update query
+			if( preparedStatement.executeUpdate()>0)return true;
+		} catch (SQLException e) {
+			// process sql exception
+			JDBCUtils.printSQLException(e);
+		}
+		return false;
+	}
+
 }
