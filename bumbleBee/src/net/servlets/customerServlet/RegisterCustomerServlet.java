@@ -9,11 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.dao.UserDao;
 import net.dao.customerDao.CustomerDao;
 import net.dao.customerDao.impl.CustomerDAOImpl;
 import net.model.Customer;
-import net.model.User;
 
 @WebServlet("/registerCustomer")
 public class RegisterCustomerServlet extends HttpServlet {

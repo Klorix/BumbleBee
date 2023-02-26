@@ -1,4 +1,4 @@
-package net.servlets.customerServlet;
+package net.servlets.itemServlet;
 
 import javax.servlet.http.HttpServlet;
 
