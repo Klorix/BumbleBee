@@ -11,7 +11,7 @@ import net.utils.JDBCUtils;
 public class ItemDaoImpl implements ItemDao{
 
 	@Override
-	public boolean saveItem(Item i) {
+	public boolean saveItem(Item i) throws ClassNotFoundException{
 		String INSERT_USERS_SQL = "INSERT INTO Product"
 				+ "  (productId,productName,productQty,unitPrice,productStatus) VALUES "
 				+ " (?,?,?,?,?);";
