@@ -25,7 +25,7 @@
 		</style>
 	</head>
 <body>
-	<jsp:include page="../common/header.jsp"></jsp:include>
+	<jsp:include page="../common/adminHeader.jsp"></jsp:include>
 	<section class="dashboardAdmin container-fluid position-relative d-flex align-items-center justify-content-center"
 	             style="width: 100%;height: 95vh;background-color: rgb(226, 226, 226);top:0">
 	        <div class="row position-relative d-flex" style="width: 90%;height: 85%;">

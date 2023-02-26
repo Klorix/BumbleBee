@@ -149,7 +149,7 @@
 	                    <li class="nav-item position-relative"><a class="nav-link text-white" href="#" id="Orders"><span
 	                            style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Orders</span></a>
 	                    </li>
-	                    <li class="nav-item position-relative"><a class="nav-link text-white" href="#" id="Items"><span
+	                    <li class="nav-item position-relative"><a class="nav-link text-white" href="<%=request.getContextPath()%>/item/manageItem.jsp" id="Items"><span
 	                            style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Items</span></a>
 	                    </li>
 	                    <li class="nav-item position-relative"><a class="nav-link text-white" href="#" id="Customer"><span
