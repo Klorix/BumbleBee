@@ -41,14 +41,18 @@ public class SaveItemsServlet extends HttpServlet {
 		int qty = Integer.parseInt(request.getParameter("productQtyInManageItems"));
 		double unitPrice = Double.parseDouble(request.getParameter("productUnitPriceInManageItems"));
 		String status = request.getParameter("productStatusInManageItems");
+		String category = request.getParameter("productCategoryInManageItems");
+		String brand = request.getParameter("productBrandInManageItems");
 		
 		System.out.println(id);
 		System.out.println(name);
 		System.out.println(qty);
 		System.out.println(unitPrice);
 		System.out.println(status);
- 
-	    Item i = new Item(id,name,qty,unitPrice,status);
+		System.out.println(category);
+		System.out.println(brand);
+		
+	    Item i = new Item(id,name,qty,unitPrice,status,category,brand);
 	    try {
 			if(itemDao.saveItem(i) == true) {
 				request.setAttribute("NOTIFICATION", "Item Saved Successfully!");

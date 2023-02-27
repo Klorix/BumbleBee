@@ -101,4 +101,23 @@ public class CustomerDAOImpl implements CustomerDao{
 		return null;
 	}
 
+	@Override
+	public Customer searchCustomer(String userName) {
+		try (Connection connection = JDBCUtils.getConnection();
+				// Step 2:Create a statement using connection object
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Customer WHERE customerUserName=?")) {
+			preparedStatement.setString(1, userName);
+			ResultSet rst = preparedStatement.executeQuery();
+			if(rst.next()) {
+				return new Customer(rst.getString(1),rst.getString(2),rst.getString(3),rst.getString(4),rst.getString(5),rst.getString(6),rst.getString(7));
+			}
+			System.out.println(preparedStatement);
+			// Step 3: Execute the query or update query
+		} catch (SQLException e) {
+			// process sql exception
+			JDBCUtils.printSQLException(e);
+		}
+		return null;
+	}
+
 }

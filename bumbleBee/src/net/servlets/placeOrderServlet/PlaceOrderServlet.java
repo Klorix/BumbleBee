@@ -1,4 +1,4 @@
-package net.servlets.itemServlet;
+package net.servlets.placeOrderServlet;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,50 +10,47 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.dao.itemDao.ItemDao;
-import net.dao.itemDao.impl.ItemDaoImpl;
+import net.dao.OrderDao.impl.OrderDaoImpl;
 import net.model.Item;
 
-@WebServlet("/updateItem")
-public class UpdateItemServlet extends HttpServlet {
+@WebServlet("/placeOrder")
+public class PlaceOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ItemDao itemDao;
+	private net.dao.OrderDao.OrderDao orderDao;
 
 	public void init() {
-		itemDao = new ItemDaoImpl();
+		orderDao = new OrderDaoImpl();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		update(request, response);
+		placeOrder(request, response);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.sendRedirect("register/register.jsp");
+		//getAllItems(request);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("order/order.jsp");
+		dispatcher.forward(request, response);
 	}
 
-	private void update(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		String id = request.getParameter("productIdInManageItems");
+	private void placeOrder(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		/*String id = request.getParameter("productIdInManageItems");
 		String name = request.getParameter("productNameInManageItems");
 		int qty = Integer.parseInt(request.getParameter("productQtyInManageItems"));
 		double unitPrice = Double.parseDouble(request.getParameter("productUnitPriceInManageItems"));
 		String status = request.getParameter("productStatusInManageItems");
-		String category = request.getParameter("productCategoryInManageItems");
-		String brand = request.getParameter("productBrandInManageItems");
 		
 		System.out.println(id);
 		System.out.println(name);
 		System.out.println(qty);
 		System.out.println(unitPrice);
 		System.out.println(status);
-		System.out.println(category);
-		System.out.println(brand);
-		
-	    Item i = new Item(id,name,qty,unitPrice,status,category,brand);
+ 
+	    Item i = new Item(id,name,qty,unitPrice,status);
 	    try {
-			if(itemDao.updateItem(i) == true) {
-				request.setAttribute("NOTIFICATION", "Item Updated Successfully!");
+			if(itemDao.saveItem(i) == true) {
+				request.setAttribute("NOTIFICATION", "Item Saved Successfully!");
 				getAllItems(request);
 			}
 		} catch (ClassNotFoundException e) {
@@ -61,10 +58,10 @@ public class UpdateItemServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	    RequestDispatcher dispatcher = request.getRequestDispatcher("item/manageItem.jsp");
-		dispatcher.forward(request, response);
+		dispatcher.forward(request, response);*/
 	}
 	public void getAllItems(HttpServletRequest request) {
-		List<Item>items = itemDao.getAllItems();
-		request.setAttribute("itemDetails", items);
+		/*List<Item>items = itemDao.getAllItems();
+		request.setAttribute("itemDetails", items);*/
 	}
 }

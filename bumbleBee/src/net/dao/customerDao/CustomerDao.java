@@ -10,4 +10,5 @@ public interface CustomerDao {
 	public boolean updateCustomer(Customer c) throws ClassNotFoundException;
 	public boolean deleteCustomer(String id) throws ClassNotFoundException;
 	public List<Customer> getAllCustomers();
+	public Customer searchCustomer(String userName);
 }

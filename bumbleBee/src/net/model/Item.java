@@ -6,16 +6,25 @@ public class Item {
 	private int qty;
 	private double unitPrice;
 	private String status;
+	private String category;
+	private String brand;
 	
 	public Item() {}
 	
-	public Item(String id,String name,int qty,double unitPrice,String status) {
-		this.setId(id);
-		this.setName(name);
-		this.setQty(qty);
-		this.setUnitPrice(unitPrice);
-		this.setStatus(status);
+	
+
+	public Item(String id, String name, int qty, double unitPrice, String status, String category, String brand) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.qty = qty;
+		this.unitPrice = unitPrice;
+		this.status = status;
+		this.category = category;
+		this.brand = brand;
 	}
+
+
 
 	public String getId() {
 		return id;
@@ -57,10 +66,37 @@ public class Item {
 		this.status = status;
 	}
 
+
+
+	public String getCategory() {
+		return category;
+	}
+
+
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+
+
+	public String getBrand() {
+		return brand;
+	}
+
+
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "Item [id=" + id + ", name=" + name + ", qty=" + qty + ", unitPrice=" + unitPrice + ", status=" + status
-				+ "]";
+				+ ", category=" + category + ", brand=" + brand + "]";
 	}
+	
 	
 }

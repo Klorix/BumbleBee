@@ -38,7 +38,8 @@ public class LoginServlet extends HttpServlet {
 		System.out.println(username);
 		System.out.println(password);
 		if(username.equals("kamal")&&password.equals("kamal")) {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("login/login.jsp");
+			request.setAttribute("loggedUser", username);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("order/order.jsp");
 			dispatcher.forward(request, response);
 		}else {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("admin/adminDashboard.jsp");

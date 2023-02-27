@@ -73,7 +73,23 @@
 		                                <input type="text" class="form-control bg-transparent border-3 w-100"
 		                                       id="productStatusInManageItems" name="productStatusInManageItems" placeholder="Product Status" style="height: 40px;">
 		                                <label for="productStatusInManageItems"
-		                                       id="itemUnitPriceLblInItems"><span>Product Status</span></label>
+		                                       id="itemStatusLblInItems"><span>Product Status</span></label>
+		                            </div>
+		                        </div>
+		                        <div class="col-6 col-sm">
+		                            <div class="form-floating position-relative">
+		                                <input type="text" class="form-control bg-transparent border-3 w-100"
+		                                       id="productCategoryInManageItems" name="productCategoryInManageItems" placeholder="Product Category" style="height: 40px;">
+		                                <label for="productCategoryInManageItems"
+		                                       id="itemCategoryLblInItems"><span>Product Category</span></label>
+		                            </div>
+		                        </div>
+		                        <div class="col-6 col-sm">
+		                            <div class="form-floating position-relative">
+		                                <input type="text" class="form-control bg-transparent border-3 w-100"
+		                                       id="productStatusInManageItems" name="productBrandInManageItems" placeholder="Product Brand" style="height: 40px;">
+		                                <label for="productBrandInManageItems"
+		                                       id="itemBrandLblInItems"><span>Product Brand</span></label>
 		                            </div>
 		                        </div>
 		                    </div>
@@ -129,6 +145,8 @@
 	                            <th scope="col">Qty</th>
 	                            <th scope="col">Unit Price</th>
 	                            <th scope="col">Status</th>
+	                            <th scope="col">Category</th>
+	                            <th scope="col">Brand</th>
 	                        </tr>
 	                        </thead>
 	                        <tbody>
@@ -139,12 +157,14 @@
 									int count = 1;
 									for (Item i : data){%>
 									<tr>
-									<td width="20%"><%=count++%></td>
-									<td width="20%"><%=i.getId()%></td>
-									<td width="20%"><%=i.getName()%></td>
-									<td width="20%"><%=i.getQty()%></td>
-									<td width="20%"><%=i.getUnitPrice()%></td>
-									<td width="20%"><%=i.getStatus()%></td>
+									<td width="12.5%"><%=count++%></td>
+									<td width="12.5%"><%=i.getId()%></td>
+									<td width="12.5%"><%=i.getName()%></td>
+									<td width="12.5%"><%=i.getQty()%></td>
+									<td width="12.5%"><%=i.getUnitPrice()%></td>
+									<td width="12.5%"><%=i.getStatus()%></td>
+									<td width="12.5%"><%=i.getCategory()%></td>
+									<td width="12.5%"><%=i.getBrand()%></td>
 									</tr>
 								<%}}%>
 	                        </tbody>

@@ -178,18 +178,13 @@
 	            <div class="collapse navbar-collapse position-relative" id="navbarText">
 	                <ul class="position-absolute navbar-nav flex-row w-100 justify-content-start fs-6 px-4"
 	                    style="left:200px;">
-	                    <li class="nav-item position-relative"><a class="nav-link text-white" href="<%=request.getContextPath()%>/admin/adminDashboard.jsp" id="Home"><span
-	                            style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Home</span></a>
-	                    </li>
-	                    <li class="nav-item position-relative"><a class="nav-link text-white" href="#" id="Orders"><span
-	                            style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Orders</span></a>
-	                    </li>
-	                    <li class="nav-item position-relative" ><a class="nav-link text-white" id="Items" href="<%=request.getContextPath()%>/saveItem"><span
-		                        style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Items</span></a>
+	                     <li class="nav-item position-relative" ><a class="nav-link text-white" id="Order" href="<%=request.getContextPath()%>/placeOrder"><span
+		                        style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Place Order</span></a>
 	                   
 	                    </li>
-	                    <li class="nav-item position-relative"><a class="nav-link text-white" href="<%=request.getContextPath()%>/registerCustomer" id="Customer"><span
-	                            style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Customers</span></a>
+	                    <li class="nav-item position-relative" ><a class="nav-link text-white" id="Items" href="<%=request.getContextPath()%>/itemDetails"><span
+		                        style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Items</span></a>
+	                   
 	                    </li>
 	                </ul>
 	            </div>
