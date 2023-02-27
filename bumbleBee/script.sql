@@ -1,18 +1,105 @@
-CREATE TABLE `users` (
-  `id` int(3) NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(20) DEFAULT NULL,
-  `last_name` varchar(20) DEFAULT NULL,
-  `username` varchar(250) DEFAULT NULL,
-  `password` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+drop database if exists bumble_bee;
+create database if not exists bumble_bee;
+show databases;
 
-CREATE TABLE `todos` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `description` varchar(255) DEFAULT NULL,
-  `is_done` bit(1) NOT NULL,
-  `target_date` datetime(6) DEFAULT NULL,
-  `username` varchar(255) DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+use bumble_bee;
+
+create table admin(
+	adminId varchar(5) primary key,
+	adminName varchar(100) not null,
+	password varchar(100) not null
+);
+show tables;
+desc admin;
+
+create table customer(
+	customerId varchar(5) primary key,
+	customerName varchar(100) not null,
+	customerAddress varchar(100) not null,
+	customerContactNumber varchar(100) not null,
+	customerDOB varchar(100) not null,
+	customerUserName varchar(100) not null,
+	password varchar(100) not null,
+	loanStatus int not null,
+	loanAmount DECIMAL(10, 2)
+);
+show tables;
+desc customer;
+
+
+drop table Category;
+
+create table Category(
+	categoryId varchar(10),
+	categoryName varchar(100) not null,
+	constraint primary key(categoryId)
+);
+show tables;
+desc Category;
+
+drop table Brand;
+
+create table Brand(
+	brandId varchar(10),
+	brandName varchar(100) not null,
+	constraint primary key(brandId)
+);
+show tables;
+desc Brand;
+
+drop table product;
+
+create table product(
+	productId varchar(5),
+	productName varchar(100) not null,
+	qtyOnHand int not null,
+	unitPrice DECIMAL (6, 2),
+	productStatus int not null,
+	productCategory varchar(10) not null,
+	productBrand varchar(10) not null,
+	constraint foreign key(productCategory) references Category(categoryId),
+	constraint foreign key(productBrand) references Brand(brandId),
+	constraint primary key(productId)
+);
+show tables;
+desc product;
+
+
+create table `order`(
+	orderId varchar(5),
+	orderDate date not null,
+	customerId varchar(6),
+	orderStatus int not null,
+	loanAmount DECIMAL(10, 2),
+	paidAmount DECIMAL(10, 2),
+	constraint primary key(orderId),
+	constraint foreign key(customerId) references customer(customerId)
+	on delete cascade on update cascade
+);
+show tables;
+desc `order`;
+
+
+drop table orderDetails;
+
+create table orderDetails(
+   	productId varchar(5),
+   	orderId varchar(5),
+  	orderQty int(11),
+   	totalPrice decimal(10 ,2),
+   	constraint foreign key(productId) references product(productId)
+	on delete cascade on update cascade,
+	constraint foreign key(orderId) references `order`(orderId)
+	on delete cascade on update cascade
+);
+show tables;
+desc orderDetails;
+
+
+
+
+
+
+
+
+

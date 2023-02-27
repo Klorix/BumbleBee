@@ -178,18 +178,24 @@
 	            <div class="collapse navbar-collapse position-relative" id="navbarText">
 	                <ul class="position-absolute navbar-nav flex-row w-100 justify-content-start fs-6 px-4"
 	                    style="left:200px;">
-	                    <li class="nav-item position-relative"><a class="nav-link text-white" href="<%=request.getContextPath()%>/admin/adminDashboard.jsp" id="Home"><span
+	                    <li class="nav-item position-relative" style="width:5%"><a class="nav-link text-white" href="<%=request.getContextPath()%>/admin/adminDashboard.jsp" id="Home"><span
 	                            style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Home</span></a>
 	                    </li>
-	                    <li class="nav-item position-relative"><a class="nav-link text-white" href="#" id="Orders"><span
+	                    <li class="nav-item position-relative" style="width:10%"><a class="nav-link text-white" href="#" id="Orders"><span
 	                            style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Orders</span></a>
 	                    </li>
-	                    <li class="nav-item position-relative" ><a class="nav-link text-white" id="Items" href="<%=request.getContextPath()%>/saveItem"><span
-		                        style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Items</span></a>
+	                    <li class="nav-item position-relative" style="width:10%"><a class="nav-link text-white" id="Items" href="<%=request.getContextPath()%>/saveItem"><span
+		                        style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Manage Items</span></a>
 	                   
 	                    </li>
-	                    <li class="nav-item position-relative"><a class="nav-link text-white" href="<%=request.getContextPath()%>/registerCustomer" id="Customer"><span
+	                    <li class="nav-item position-relative" style="width:13%"><a class="nav-link text-white" href="<%=request.getContextPath()%>/registerCustomer" id="Customer"><span
 	                            style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Customers</span></a>
+	                    </li>
+	                    <li class="nav-item position-relative" style="width:13%"><a class="nav-link text-white" href="<%=request.getContextPath()%>/saveCategory" id="Customer"><span
+	                            style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Manage Category</span></a>
+	                    </li>
+	                    <li class="nav-item position-relative" style="width:13%"><a class="nav-link text-white" href="<%=request.getContextPath()%>/saveBrand" id="Customer"><span
+	                            style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Manage Brands</span></a>
 	                    </li>
 	                </ul>
 	            </div>

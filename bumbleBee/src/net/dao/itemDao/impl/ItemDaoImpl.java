@@ -97,44 +97,4 @@ public class ItemDaoImpl implements ItemDao{
 		return null;
 	}
 
-	@Override
-	public List<String> getAllCategories() {
-		try (Connection connection = JDBCUtils.getConnection();
-				// Step 2:Create a statement using connection object
-			PreparedStatement preparedStatement = connection.prepareStatement("SELECT productCategory FROM Product")) {
-			ResultSet rst = preparedStatement.executeQuery();
-			List<String>categories = new ArrayList<>();
-			while(rst.next()) {
-				categories.add(rst.getString("productCategory"));
-			}
-			System.out.println(preparedStatement);
-			// Step 3: Execute the query or update query
-			return categories;
-		} catch (SQLException e) {
-			// process sql exception
-			JDBCUtils.printSQLException(e);
-		}
-		return null;
-	}
-
-	@Override
-	public List<String> getAllBrands() {
-		try (Connection connection = JDBCUtils.getConnection();
-				// Step 2:Create a statement using connection object
-			PreparedStatement preparedStatement = connection.prepareStatement("SELECT productBrand FROM Product")) {
-			ResultSet rst = preparedStatement.executeQuery();
-			List<String>brands = new ArrayList<>();
-			while(rst.next()) {
-				brands.add(rst.getString("productBrand"));
-			}
-			System.out.println(preparedStatement);
-			// Step 3: Execute the query or update query
-			return brands;
-		} catch (SQLException e) {
-			// process sql exception
-			JDBCUtils.printSQLException(e);
-		}
-		return null;
-	}
-
 }

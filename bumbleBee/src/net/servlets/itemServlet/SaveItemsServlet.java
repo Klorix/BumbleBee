@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.dao.BrandDao.BrandDao;
+import net.dao.BrandDao.impl.BrandDaoImpl;
+import net.dao.CategoryDao.CategoryDao;
+import net.dao.CategoryDao.impl.CategoryDaoImpl;
 import net.dao.itemDao.ItemDao;
 import net.dao.itemDao.impl.ItemDaoImpl;
 import net.model.Item;
@@ -18,9 +22,12 @@ import net.model.Item;
 public class SaveItemsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ItemDao itemDao;
-
+	private CategoryDao categoryDao;
+	private BrandDao brandDao;
 	public void init() {
 		itemDao = new ItemDaoImpl();
+		categoryDao = new CategoryDaoImpl();
+		brandDao = new BrandDaoImpl();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -41,18 +48,18 @@ public class SaveItemsServlet extends HttpServlet {
 		int qty = Integer.parseInt(request.getParameter("productQtyInManageItems"));
 		double unitPrice = Double.parseDouble(request.getParameter("productUnitPriceInManageItems"));
 		String status = request.getParameter("productStatusInManageItems");
-		String category = request.getParameter("productCategoryInManageItems");
+		String categoryId = request.getParameter("productCategoryInManageItems");
 		String brand = request.getParameter("productBrandInManageItems");
-		
+		String brandId = brandDao.searchBrandByName(brand).getBrandId();
 		System.out.println(id);
 		System.out.println(name);
 		System.out.println(qty);
 		System.out.println(unitPrice);
 		System.out.println(status);
-		System.out.println(category);
-		System.out.println(brand);
+		System.out.println(categoryId);
+		System.out.println(brandId);
 		
-	    Item i = new Item(id,name,qty,unitPrice,status,category,brand);
+	    Item i = new Item(id,name,qty,unitPrice,status,categoryId,brandId);
 	    try {
 			if(itemDao.saveItem(i) == true) {
 				request.setAttribute("NOTIFICATION", "Item Saved Successfully!");

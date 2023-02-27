@@ -1,0 +1,108 @@
+package net.dao.BrandDao.impl;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import net.dao.BrandDao.BrandDao;
+import net.model.Brand;
+import net.utils.JDBCUtils;
+
+public class BrandDaoImpl implements BrandDao{
+
+	@Override
+	public boolean saveBrand(Brand b){
+		try (Connection connection = JDBCUtils.getConnection();
+				// Step 2:Create a statement using connection object
+				PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Brand (brandId,brandName) VALUES (?,?);")) {
+			preparedStatement.setString(1, b.getBrandId());
+			preparedStatement.setString(2, b.getBrandName());
+			
+			System.out.println(preparedStatement);
+			// Step 3: Execute the query or update query
+			if( preparedStatement.executeUpdate()>0)return true;
+		} catch (SQLException e) {
+			// process sql exception
+			JDBCUtils.printSQLException(e);
+		}
+		return false;
+	}
+
+	@Override
+	public boolean updateBrand(Brand b) {
+		try (Connection connection = JDBCUtils.getConnection();
+				// Step 2:Create a statement using connection object
+				PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Brand SET brandName=? WHERE brandId=?;")) {
+			preparedStatement.setString(1, b.getBrandName());
+			preparedStatement.setString(2, b.getBrandId());		
+			System.out.println(preparedStatement);
+			// Step 3: Execute the query or update query
+			if( preparedStatement.executeUpdate()>0)return true;
+		} catch (SQLException e) {
+			// process sql exception
+			JDBCUtils.printSQLException(e);
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteBrand(String id) {
+		try (Connection connection = JDBCUtils.getConnection();
+				// Step 2:Create a statement using connection object
+				PreparedStatement preparedStatement = connection.prepareStatement("DELETE Brand where brandId=?")) {
+			preparedStatement.setString(1, id);
+			
+			System.out.println(preparedStatement);
+			// Step 3: Execute the query or update query
+			if( preparedStatement.executeUpdate()>0)return true;
+		} catch (SQLException e) {
+			// process sql exception
+			JDBCUtils.printSQLException(e);
+		}
+		return false;
+	}
+
+	@Override
+	public List<Brand> getBrandDetails() {
+		try (Connection connection = JDBCUtils.getConnection();
+				// Step 2:Create a statement using connection object
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Brand")) {
+			ResultSet rst = preparedStatement.executeQuery();
+			List<Brand>brands = new ArrayList<>();
+			while(rst.next()) {
+				brands.add(new Brand(rst.getString(1),rst.getString(2)));
+			}
+			System.out.println(preparedStatement);
+			// Step 3: Execute the query or update query
+			return brands;
+		} catch (SQLException e) {
+			// process sql exception
+			JDBCUtils.printSQLException(e);
+		}
+		return null;
+	}
+
+	@Override
+	public Brand searchBrandByName(String name) {
+		try (Connection connection = JDBCUtils.getConnection();
+				// Step 2:Create a statement using connection object
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Brand WHERE brandName=?")) {
+			preparedStatement.setString(1, name); 
+			ResultSet rst = preparedStatement.executeQuery();
+			if(rst.next()) {
+				return new Brand(rst.getString(1),rst.getString(2));
+			}
+			System.out.println(preparedStatement);
+			// Step 3: Execute the query or update query
+			return null;
+		} catch (SQLException e) {
+			// process sql exception
+			JDBCUtils.printSQLException(e);
+		}
+		return null;
+	}
+
+}

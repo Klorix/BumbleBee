@@ -224,12 +224,12 @@
 	                        </button>
 	                    </div>
 	                    <div class="col-6 col-sm-6 col-md">
-	                        <button id="updateSignupDetailsBtn" class="btn btn-outline-secondary" style="width: 100%;">
+	                        <button id="updateSignupDetailsBtn" class="btn btn-outline-secondary" style="width: 100%;"" type="submit" formaction="<%=request.getContextPath()%>/updateCustomer" formmethod="post">
 	                            Update
 	                        </button>
 	                    </div>
 	                    <div class="col">
-	                        <button id="deleteSignupDetailsBtn" class="btn btn-outline-danger" style="width: 100%;">Delete
+	                        <button id="deleteSignupDetailsBtn" class="btn btn-outline-danger" style="width: 100%;"" type="submit" formaction="<%=request.getContextPath()%>/deleteCustomer" formmethod="post">Delete
 	                        </button>
 	                    </div>
 	                </div>

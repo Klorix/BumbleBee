@@ -1,3 +1,9 @@
+<%@page import="net.model.Brand"%>
+<%@page import="net.dao.BrandDao.impl.BrandDaoImpl"%>
+<%@page import="net.dao.BrandDao.BrandDao"%>
+<%@page import="net.model.Category"%>
+<%@page import="net.dao.CategoryDao.impl.CategoryDaoImpl"%>
+<%@page import="net.dao.CategoryDao.CategoryDao"%>
 <%@page import="net.model.Item"%>
 <%@page language="java" import="java.util.*" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -78,19 +84,35 @@
 		                        </div>
 		                        <div class="col-6 col-sm">
 		                            <div class="form-floating position-relative">
-		                                <input type="text" class="form-control bg-transparent border-3 w-100"
-		                                       id="productCategoryInManageItems" name="productCategoryInManageItems" placeholder="Product Category" style="height: 40px;">
-		                                <label for="productCategoryInManageItems"
-		                                       id="itemCategoryLblInItems"><span>Product Category</span></label>
-		                            </div>
+	                                <select class="form-select bg-transparent" id="productCategoryInManageItems" name="productCategoryInManageItems"
+	                                        aria-label="Floating label select example" style="height: 40px; width: 100%;">
+	                                        <option value="Select Category">Select Category</option>
+	                                        <%CategoryDao categoryDao = new CategoryDaoImpl();
+	                                        List<Category>categoryList = categoryDao.getCategoryDetails();
+	                                        for(Category c:categoryList){
+	                                        	System.out.println(c.getCategoryName());
+	                                        %>
+	                                        <option value=<%=c.getCategoryId()%>><%=c.getCategoryId()%></option>
+	                                        <%} %>
+	                                </select>
+	                                <label for="productCategoryInManageItems">Product Category</label>
+	                            </div>
 		                        </div>
 		                        <div class="col-6 col-sm">
 		                            <div class="form-floating position-relative">
-		                                <input type="text" class="form-control bg-transparent border-3 w-100"
-		                                       id="productStatusInManageItems" name="productBrandInManageItems" placeholder="Product Brand" style="height: 40px;">
-		                                <label for="productBrandInManageItems"
-		                                       id="itemBrandLblInItems"><span>Product Brand</span></label>
-		                            </div>
+	                                <select class="form-select bg-transparent" id="productBrandInManageItems" name="productBrandInManageItems"
+	                                        aria-label="Floating label select example" style="height: 40px; width: 100%;">
+	                                         <option value="Select Brand">Select Brand</option>
+	                                        <%BrandDao brandDao = new BrandDaoImpl();
+	                                        List<Brand>brandList = brandDao.getBrandDetails();
+	                                        for(Brand b:brandList){
+	                                        	System.out.println(b.getBrandName());
+	                                        %>
+	                                        <option value=<%=b.getBrandName()%>><%=b.getBrandName()%></option>
+	                                        <%} %>
+	                                </select>
+	                                <label for="productBrandInManageItems">Product Brand</label>
+	                            </div>
 		                        </div>
 		                    </div>
 		                </div>
@@ -108,7 +130,7 @@
 		                <div class="col-sm-6 col-md-3 position-relative">
 		                    <div class="col-11 position-absolute" style="top: 0;bottom: 0;left:0;right:0;margin: auto;">
 		                        <button class="btn btn-outline-secondary position-absolute"
-		                                style="top: 0;bottom: 0;margin: auto;height: 40px;width: 100%;" id="updateItemBtn">
+		                                style="top: 0;bottom: 0;margin: auto;height: 40px;width: 100%;" id="updateItemBtn"  type="submit" formaction="<%=request.getContextPath()%>/updateItem" formmethod="post">
 		                            Update Item
 		                        </button>
 		                    </div>
@@ -116,17 +138,8 @@
 		                <div class="col-sm-6 col-md-3 position-relative">
 		                    <div class="col-11 position-absolute" style="top: 0;bottom: 0;left:0;right:0;margin: auto;">
 		                        <button class="btn btn-outline-danger position-absolute"
-		                                style="top: 0;bottom: 0;margin: auto;height: 40px;width: 100%;" id="deleteItemBtn">
+		                                style="top: 0;bottom: 0;margin: auto;height: 40px;width: 100%;" id="deleteItemBtn"  type="submit" formaction="<%=request.getContextPath()%>/deleteItem" formmethod="post">
 		                            Delete Item
-		                        </button>
-		                    </div>
-		                </div>
-		
-		                <div class="col-sm-6 col-md-3 position-relative">
-		                    <div class="col-11 position-absolute" style="top: 0;bottom: 0;left:0;right:0;margin: auto;">
-		                        <button id="searchItemBtn" class="btn btn-outline-primary position-absolute"
-		                                style="top: 0;bottom: 0;margin: auto;height: 40px;width: 100%;" id="deleteItemBtn">
-		                            Search Item
 		                        </button>
 		                    </div>
 		                </div>
