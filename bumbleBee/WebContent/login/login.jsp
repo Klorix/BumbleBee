@@ -48,16 +48,16 @@
 	                </div>
 	            </div>
            </form>
-            <form action="<%=request.getContextPath()%>/registerCustomer" method="GET">
+            
             	<div class="row"
 	                 style="position:absolute;top: 75%;left: 0;right: 0;margin: auto;width: 200px;height: 40px;">
 	                <div class="col-12">
-	                    <a href="#" id="signupBtnInLogin">
+	                    <a href="<%=request.getContextPath()%>/customer/register.jsp" id="signupBtnInLogin">
 	                        <button class="btn btn-outline-secondary shadow w-100">Signup</button>
 	                    </a>
 	                </div>
 	            </div>
-            </form>
+            
         </div>
     </section>
 </body>
