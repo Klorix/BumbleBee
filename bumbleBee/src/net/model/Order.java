@@ -1,10 +1,11 @@
 package net.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Order {
 	private String orderId;
-    private String orderDate;
+    private Date orderDate;
     private String customerId;
     private double loanAmount;
     private double paidAmount;
@@ -13,7 +14,7 @@ public class Order {
     public Order() {
     }
     
-    public Order(String orderId, String orderDate, String customerId, double loanAmount, 
+    public Order(String orderId, Date orderDate, String customerId, double loanAmount, 
     		double paidAmount){
         this.setOrderId(orderId);
         this.setOrderDate(orderDate);
@@ -22,7 +23,7 @@ public class Order {
         this.setPaidAmount(paidAmount);
     }
     
-    public Order(String orderId, String orderDate, String customerId, double loanAmount, 
+    public Order(String orderId, Date orderDate, String customerId, double loanAmount, 
     		double paidAmount,  ArrayList<OrderDetails> orderDetails) {
         this.setOrderId(orderId);
         this.setOrderDate(orderDate);
@@ -32,51 +33,51 @@ public class Order {
         this.setOrderDetails(orderDetails);
     }
 
-	private String getOrderId() {
+    public String getOrderId() {
 		return orderId;
 	}
 
-	private void setOrderId(String orderId) {
+    public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
 
-	private String getOrderDate() {
+    public Date getOrderDate() {
 		return orderDate;
 	}
 
-	private void setOrderDate(String orderDate) {
+    public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
 	}
 
-	private String getCustomerId() {
+    public String getCustomerId() {
 		return customerId;
 	}
 
-	private void setCustomerId(String customerId) {
+	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
 	}
 
-	private double getLoanAmount() {
+	public double getLoanAmount() {
 		return loanAmount;
 	}
 
-	private void setLoanAmount(double loanAmount) {
+	public void setLoanAmount(double loanAmount) {
 		this.loanAmount = loanAmount;
 	}
 
-	private double getPaidAmount() {
+	public double getPaidAmount() {
 		return paidAmount;
 	}
 
-	private void setPaidAmount(double paidAmount) {
+	public void setPaidAmount(double paidAmount) {
 		this.paidAmount = paidAmount;
 	}
 
-	private ArrayList <OrderDetails> getOrderDetails() {
+	public ArrayList <OrderDetails> getOrderDetails() {
 		return orderDetails;
 	}
 
-	private void setOrderDetails(ArrayList <OrderDetails> orderDetails) {
+	public void setOrderDetails(ArrayList <OrderDetails> orderDetails) {
 		this.orderDetails = orderDetails;
 	}
 

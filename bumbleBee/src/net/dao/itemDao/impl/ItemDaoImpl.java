@@ -97,4 +97,25 @@ public class ItemDaoImpl implements ItemDao{
 		return null;
 	}
 
+	@Override
+	public Item searchItem(String id) {
+		try (Connection connection = JDBCUtils.getConnection();
+				// Step 2:Create a statement using connection object
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Product WHERE productId=?")) {
+			preparedStatement.setString(1, id);	
+			ResultSet rst = preparedStatement.executeQuery();
+			
+			while(rst.next()) {
+				return new Item(rst.getString(1),rst.getString(2),rst.getInt(3),rst.getDouble(4),rst.getString(5),rst.getString(6),rst.getString(7));
+			}
+			System.out.println(preparedStatement);
+			// Step 3: Execute the query or update query
+			return null;
+		} catch (SQLException e) {
+			// process sql exception
+			JDBCUtils.printSQLException(e);
+		}
+		return null;
+	}
+
 }

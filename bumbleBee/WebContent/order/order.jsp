@@ -270,6 +270,8 @@
 		var addToCartObj;
 		var orderIdHome = document.getElementById("orderIdHome");
 		var dropdownList = document.getElementById('itemProductHome');
+		var tbody;
+		var contextPath = 
 		    dropdownList.onchange = (ev) =>{
 		      let selecetedIndex = dropdownList.selectedIndex;
 		      let selectedOption = dropdownList.options[selecetedIndex];
@@ -359,7 +361,7 @@
 				}, false);
 
 			function addDetailsToAddToCartTbl(){
-				let tbody = document.getElementById("tbodyInAddToCartTbl");
+				tbody = document.getElementById("tbodyInAddToCartTbl");
 				tbody.innerHTML="";
 				let count = 1;
 				addToCartArr.forEach((e)=>{
@@ -409,12 +411,12 @@
 				orderIdHome.value = oId;
 			}
 
-			function placeOrder(){
+			async function placeOrder(){
 				let orderDetailsArr = new Array();
 				
 				addToCartArr.forEach((e)=>{
 					let orderDetailsObj = {
-							productId:e.productId,
+							productId:e.productCode,
 							orderId:orderIdHome.value,
 							orderQty:e.qtyOnHand,
 							totalPrice:e.total
@@ -424,12 +426,52 @@
 				
 				let order = {
 						orderId:orderIdHome.value,
-						orderDate:"",
+						orderDate:null,
 						customerId:document.getElementById("customerIdHome").value,
 						loanAmount:parseFloat(loanAmountInHome.value),
 						paidAmount:parseFloat(orderTotal),
 						orderDetails:orderDetailsArr
 				}
+				console.log(order)
+				let options = {
+	            method: 'POST',
+	            headers: {
+	                'Content-Type': 
+	                    'application/json',
+	                    'Accept': 'application/json'
+	            },
+	            body: JSON.stringify(order)
+		        }
+		        // Fake api for making post requests
+		        let resJson;
+				let res = await fetch("<%=request.getContextPath()%>/placeOrder", 
+                        options).then(async response =>{
+				    	resJson = await response.json()
+				        return await response;
+
+				    })
+					console.log(resJson)
+				    if(resJson.success==true){
+					    alert("Order Placed Successfully");
+					    clearFields();
+					    }
 			}
+
+			function clearFields(){
+				orderTotalInHome.value = "";
+				loanAmountInHome.value = "";
+				tbody.innerHTML = "";
+				orderCashRecieved.value="";
+				document.getElementById("itemDescriptionHome").value="";
+				document.getElementById("itemQtyOnHandHome").value="";
+				document.getElementById("itemQtyHome").value="";
+				document.getElementById("itemQtyHome").value="";
+				orderSubTotal.value="";
+				document.getElementById("orderMonthlyInterest").value="";
+				orderTotalInHome.value="";
+				itemUnitPrice.value="";
+				orderMonthlyInstallment.value="";
+				orderIdHome.value = generateOrderId();
+				}
 	</script>
 </html>

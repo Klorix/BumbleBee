@@ -1,17 +1,25 @@
 package net.servlets.placeOrderServlet;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import net.dao.OrderDao.impl.OrderDaoImpl;
 import net.model.Item;
+import net.model.Order;
+import net.utils.PlaceOrderResponse;
 
 @WebServlet("/placeOrder")
 public class PlaceOrderServlet extends HttpServlet {
@@ -35,30 +43,32 @@ public class PlaceOrderServlet extends HttpServlet {
 	}
 
 	private void placeOrder(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		/*String id = request.getParameter("productIdInManageItems");
-		String name = request.getParameter("productNameInManageItems");
-		int qty = Integer.parseInt(request.getParameter("productQtyInManageItems"));
-		double unitPrice = Double.parseDouble(request.getParameter("productUnitPriceInManageItems"));
-		String status = request.getParameter("productStatusInManageItems");
-		
-		System.out.println(id);
-		System.out.println(name);
-		System.out.println(qty);
-		System.out.println(unitPrice);
-		System.out.println(status);
- 
-	    Item i = new Item(id,name,qty,unitPrice,status);
+		StringBuilder sb = new StringBuilder();
+	    BufferedReader reader = request.getReader();
 	    try {
-			if(itemDao.saveItem(i) == true) {
-				request.setAttribute("NOTIFICATION", "Item Saved Successfully!");
-				getAllItems(request);
-			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    RequestDispatcher dispatcher = request.getRequestDispatcher("item/manageItem.jsp");
-		dispatcher.forward(request, response);*/
+	        String line;
+	        while ((line = reader.readLine()) != null) {
+	            sb.append(line).append('\n');
+	        }
+	    } finally {
+	        reader.close();
+	    }
+	    Order orderObj = new Gson().fromJson(sb.toString(), Order.class);
+	    orderObj.setOrderDate(new Date());
+	    System.out.println(orderObj);
+	    //orderDao.placeOrder(orderObj)
+	    if(true) {
+	    	String resp = new Gson().toJson(new PlaceOrderResponse(true));
+	    	// Write content type and also length (determined via byte array).
+	    	RequestDispatcher dispatcher = request.getRequestDispatcher("order/order.jsp");
+	    	response.setContentType("application/json");
+	    	response.setHeader("Body", resp);
+	    	PrintWriter out = response.getWriter();
+	        response.setContentType("application/json");
+	        response.setCharacterEncoding("UTF-8");
+	        out.print(resp);
+	        out.flush();
+	    }
 	}
 	public void getAllItems(HttpServletRequest request) {
 		/*List<Item>items = itemDao.getAllItems();

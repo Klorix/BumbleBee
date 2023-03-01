@@ -16,35 +16,35 @@ public class OrderDetails {
         this.setTotalPrice(totalPrice);
     }
 
-	private String getProductId() {
+    public String getProductId() {
 		return productId;
 	}
 
-	private void setProductId(String productId) {
+    public void setProductId(String productId) {
 		this.productId = productId;
 	}
 
-	private String getOrderId() {
+    public String getOrderId() {
 		return orderId;
 	}
 
-	private void setOrderId(String orderId) {
+    public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
 
-	private int getOrderQty() {
+	public int getOrderQty() {
 		return orderQty;
 	}
 
-	private void setOrderQty(int orderQty) {
+	public void setOrderQty(int orderQty) {
 		this.orderQty = orderQty;
 	}
 
-	private double getTotalPrice() {
+	public double getTotalPrice() {
 		return totalPrice;
 	}
 
-	private void setTotalPrice(double totalPrice) {
+	public void setTotalPrice(double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 
