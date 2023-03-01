@@ -91,6 +91,7 @@ public class CustomerDAOImpl implements CustomerDao{
 			while(rst.next()) {
 				customers.add(new Customer(rst.getString(1),rst.getString(2),rst.getString(3),rst.getString(4),rst.getString(5),rst.getString(6),rst.getString(7)));
 			}
+			System.out.println("Customer List = "+customers.toString());
 			System.out.println(preparedStatement);
 			// Step 3: Execute the query or update query
 			return customers;
@@ -109,8 +110,10 @@ public class CustomerDAOImpl implements CustomerDao{
 			preparedStatement.setString(1, userName);
 			ResultSet rst = preparedStatement.executeQuery();
 			if(rst.next()) {
-				return new Customer(rst.getString(1),rst.getString(2),rst.getString(3),rst.getString(4),rst.getString(5),rst.getString(6),rst.getString(7));
+				System.out.println("Customer = "+ new Customer(rst.getString(1),rst.getString(2),rst.getString(3),rst.getString(4),rst.getString(5),rst.getString(6),rst.getString(3)).toString());
+				return new Customer(rst.getString(1),rst.getString(2),rst.getString(3),rst.getString(4),rst.getString(5),rst.getString(6),rst.getString(3));
 			}
+			
 			System.out.println(preparedStatement);
 			// Step 3: Execute the query or update query
 		} catch (SQLException e) {
@@ -118,6 +121,26 @@ public class CustomerDAOImpl implements CustomerDao{
 			JDBCUtils.printSQLException(e);
 		}
 		return null;
+	}
+
+	@Override
+	public boolean checkCustomerByUserNameAndPassword(String userName, String password) {
+		try (Connection connection = JDBCUtils.getConnection();
+				// Step 2:Create a statement using connection object
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Customer WHERE customerUserName=? AND password=?")) {
+			preparedStatement.setString(1, userName);
+			preparedStatement.setString(2, password);
+			ResultSet rst = preparedStatement.executeQuery();
+			if(rst.next()) {
+				return true;
+			}
+			System.out.println(preparedStatement);
+			// Step 3: Execute the query or update query
+		} catch (SQLException e) {
+			// process sql exception
+			JDBCUtils.printSQLException(e);
+		}
+		return false;
 	}
 
 }

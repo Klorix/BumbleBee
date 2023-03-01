@@ -1,6 +1,11 @@
+<%@page import="net.model.Item"%>
+<%@page import="net.dao.itemDao.impl.ItemDaoImpl"%>
+<%@page import="net.dao.itemDao.ItemDao"%>
 <%@page import="net.model.Customer"%>
 <%@page import="net.dao.customerDao.impl.CustomerDAOImpl"%>
 <%@page import="net.dao.customerDao.CustomerDao"%>
+<%@page import="net.dao.OrderDao.OrderDao"%>
+<%@page import="net.dao.OrderDao.impl.OrderDaoImpl"%>
 <%@page import="net.dao.*"%>
 <%@page language="java" import="java.util.*" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -28,7 +33,7 @@
 				    height: 92.5vh;
 				    background-color: rgb(233, 233, 233) !important;
 				}
-		</style>
+			</style>
 	</head>
 	<body>
 		<jsp:include page="../common/customerHeader.jsp"></jsp:include>
@@ -44,24 +49,24 @@
 		                   Customer c = customerDao.searchCustomer(String.valueOf(request.getAttribute("loggedUser")));
 		                   System.out.println(c);%>
 	
-	                    <div class="form-floating position-relative" style="top: 20px;">
+	                    <div class="form-floating position-relative" style="top: 3%;">
 	                        <input type="text" class="form-control bg-transparent" id="customerIdHome" name="customerIdHome" placeholder="Id"
 	                               style="height: 40px;" value=<%=c!=null?c.getSignUpId():""%>>
 	                        <label for="customerIdHome" style="width: 100%;"><span id="customerIdHomeLbl">Id</span></label>
 	                    </div>
-	                    <div class="form-floating position-relative" style="top: 30px;">
+	                    <div class="form-floating position-relative" style="top: 3.3%;">
 	                        <input type="text" class="form-control bg-transparent" id="customerNameHome" name="customerNameHome" placeholder="Name"
 	                               style="height: 40px;" value=<%=c!=null?c.getSignUpName():""%>>
 	                        <label for="customerNameHome"><span>Name</span></label>
 	                    </div>
-	                    <div class="form-floating position-relative" style="top: 40px;">
+	                    <div class="form-floating position-relative" style="top: 3.6%;">
 	                        <input type="text" class="form-control bg-transparent" id="customerAddressHome"
 	                               placeholder="Address" style="height: 40px;" name="customerAddressHome" value=<%=c!=null?c.getSignUpAddress():""%>>
 	                        <label for="customerAddressHome"><span>Address</span></label>
 	                    </div>
-	                    <div class="form-floating position-relative" style="top: 50px;">
+	                    <div class="form-floating position-relative" style="top:3.9%;">
 	                        <input type="tel" class="form-control bg-transparent" id="customerTelHome" placeholder="Tel"
-	                               style="height: 40px; name="customerTelHome" <%=c!=null?c.getSignUpContactNo():""%>>
+	                               style="height: 40px; name="customerTelHome" value=<%=c!=null?c.getSignUpContactNo():""%>>
 	                        <label for="customerTelHome"><span>Tel</span></label>
 	                    </div>
 	                </form>
@@ -72,44 +77,52 @@
 	
 	                    <div class="row" style="height: 86%;">
 	                        <div class="col border">
-	                            <div class="form-floating position-relative" style="top: 5px;">
-	                                <select class="form-select bg-transparent" id="itemCategoryHome" name="itemCategoryHome"
-	                                        aria-label="Floating label select example" style="height: 40px; width: 100%;">
-	
-	                                </select>
-	                                <label for="itemCategoryHome">Category</label>
-	                            </div>
-	                            <div class="form-floating position-relative" style="top: 10px;">
-	                                <select class="form-select bg-transparent" id="itemBrandHome" name="itemBrandHome"
-	                                        aria-label="Floating label select example" style="height: 40px; width: 100%;">
-	
-	                                </select>
-	                                <label for="itemBrandHome">Brand</label>
-	                            </div>
-	                            <div class="form-floating position-relative" style="top: 15px;">
+	                        	<div class="form-floating position-relative" style="top: 3%;">
 	                                <select class="form-select bg-transparent" id="itemProductHome" name="itemProductHome"
 	                                        aria-label="Floating label select example" style="height: 40px; width: 100%;">
-	
+											<option value="Select Category">Select Product</option>
+	                                        <%ItemDao itemDao = new ItemDaoImpl();
+	                                        List<Item>itemList = itemDao.getAllItems();
+	                                        for(Item i:itemList){
+	                                        	System.out.println(i.getId());
+	                                        %>
+	                                        <option value=<%=i.getId()!=null?i.getId():""%>><%=i.getId()!=null?i.getId():""%></option>
+	                                        <%} %>
 	                                </select>
 	                                <label for="itemCodeHome">Product</label>
 	                            </div>
-	                            <div class="form-floating position-relative" style="top: 20px;">
+	                            <div class="form-floating position-relative" style="top: 3.3%;">
+	                                <select class="form-select bg-transparent" id="itemCategoryHome" name="itemCategoryHome"
+	                                        aria-label="Floating label select example" style="height: 40px; width: 100%;" disabled="true">
+											
+	                                </select>
+	                                <label for="itemCategoryHome">Category</label>
+	                            </div>
+	                            <div class="form-floating position-relative" style="top: 3.6%;">
+	                                <select class="form-select bg-transparent" id="itemBrandHome" name="itemBrandHome"
+	                                        aria-label="Floating label select example" style="height: 40px; width: 100%;" disabled="true">
+											
+	                                </select>
+	                                <label for="itemBrandHome">Brand</label>
+	                            </div>
+	                            <div class="form-floating position-relative" style="top:3.9%">
 	                                <input type="text" class="form-control bg-transparent" id="itemDescriptionHome" name="itemDescriptionHome"
-	                                       placeholder="Name" style="height: 40px;width: 100%;">
+	                                       placeholder="Description" style="height: 40px;width: 100%" disabled="true">
 	                                <label for="itemDescriptionHome"><span>Description</span></label>
 	                            </div>
 	                        </div>
 	                        <div class="col border position-relative">
 	                        	<div class="form-floating position-relative" style="top: 5px;">
 	                                <input type="text" class="form-control bg-transparent" id="itemQtyHome" name="itemQtyHome"
-	                                       placeholder="Address" style="height: 40px;width: 100%;">
+	                                       placeholder="Qty" style="height: 40px;width: 100%;" disabled="true">
 	                                <label for="itemQtyHome"><span>Qty</span></label>
 	                            </div>
 	                            <div class="form-floating position-relative" style="top: 10px;">
 	                                <input type="tel" class="form-control  bg-transparent" id="itemUnitPriceHome" name="itemUnitPriceHome"
-	                                       placeholder="Unit Price" style="height: 40px;width: 100%;">
+	                                       placeholder="Unit Price" style="height: 40px;width: 100%;" disabled="true">
 	                                <label for="itemUnitPriceHome"><span>Unit Price</span></label>
 	                            </div>
+	                            
 	                            <div class="form-floating position-relative" style="top: 15px;">
 	                                <input type="tel" class="form-control  bg-transparent" id="itemQtyOnHandHome" name="itemQtyOnHandHome"
 	                                       placeholder="Qty On Hand" style="height: 40px;width: 100%;">
@@ -120,7 +133,7 @@
 	                            <div class="container-fluid position-relative"
 	                                 style="left: 0;right: 0;margin: auto;width: 100%;top: 20px;height:18%">
 	                                <button class="btn btn-outline-success btn-md position-absolute start-0"
-	                                        style="width: 45%;height:80%;" id="addToCartBtn">Add To Cart
+	                                        style="width: 45%;height:80%;" id="addToCartBtn" onclick="addToCart()">Add To Cart
 	                                </button>
 	                                <button id="clearCartBtn"
 	                                        class="btn btn-outline-danger btn-md position-absolute"
@@ -137,27 +150,49 @@
 	                    </div>
 	
 	
-	                    <div class="row position-relative" style="top: 10%">
+	                    <div class="row position-relative" style="top: 8%">
 	
 	                        <div class="col">
 	                            <div class="form-floating position-relative">
 	                                <input type="tel" class="form-control  bg-transparent" id="orderCashReceived"
 	                                       placeholder="Cash" style="height: 40px;">
-	                                <label for="orderCashReceived"><span>Cash</span></label>
 	                            </div>
 	                        </div>
 	                    </div>
-	                    <div class="row position-relative" style="top: 15%;">
+	                    <div class="row position-relative" style="top: 12%;">
 	                        <div class="col">
 	                            <div class="form-floating position-relative">
-	                                <input type="tel" class="form-control  bg-transparent" id="orderCashBalance"
-	                                       placeholder="Balance" style="height: 40px;">
-	                                <label for="orderCashBalance"><span>Balance</span></label>
+		                             <input type="tel" class="form-control  bg-transparent" id="orderLoanAmount"
+		                                       placeholder="Loan Amount" style="height: 40px;" disabled="false">
+	                            </div>
+	                        </div>
+	                    </div>
+	                    
+	                    <div class="row position-relative" style="top: 15%;">
+	                        <div class="col-8 position-relative">
+	                            <h6 class="position-relative" style="top: 8px;">5% Interest - </h6>
+	                        </div>
+	                        <div class="col">
+	                            <div class="form position-relative">
+	                                <input type="tel" class="form-control  bg-transparent" id="orderMonthlyInterest"
+	                                       style="height: 34px;">
+	                            </div>
+	                        </div>
+	                    </div>
+	                    
+	                    <div class="row position-relative" style="top: 15%;">
+	                        <div class="col-8 position-relative">
+	                            <h6 class="position-relative" style="top: 8px;">Monthly Installment - </h6>
+	                        </div>
+	                        <div class="col">
+	                            <div class="form position-relative">
+	                                <input type="tel" class="form-control  bg-transparent" id="orderMonthlyInstallment"
+	                                       style="height: 34px;">
 	                            </div>
 	                        </div>
 	                    </div>
 	
-	                    <div class="row position-relative" style="top: 15%;">
+	                    <div class="row position-relative" style="top: 18%;">
 	                        <div class="col-6 position-relative">
 	                            <h6 class="position-relative" style="top: 8px;">Sub Total - </h6>
 	                        </div>
@@ -191,15 +226,14 @@
 	                        <tr>
 	                            <th scope="col">#</th>
 	                            <th scope="col">Customer Id</th>
-	                            <th scope="col">Item Code</th>
-	                            <th scope="col">Item Description</th>
-	                            <th scope="col">Item Qty</th>
-	                            <th scope="col">Item Price</th>
-	                            <th scope="col">Item Brand</th>
+	                            <th scope="col">Product Code</th>
+	                            <th scope="col">Product Description</th>
+	                            <th scope="col">Qty On Hand</th>
+	                            <th scope="col">Product Unit Price</th>
 	                            <th scope="col">Total</th>
 	                        </tr>
 	                        </thead>
-	                        <tbody>
+	                        <tbody id="tbodyInAddToCartTbl">
 	                        </tbody>
 	                    </table>
 	                </div>
@@ -207,7 +241,7 @@
 	
 	            <div class="row position-absolute w-25" style="bottom:3%;left:0;right:0;margin:auto">
 	                <div class="col col-sm">
-	                    <button id="purchaseBtn" class="btn btn-outline-success w-100">Purchase</button>
+	                    <button id="purchaseBtn" onClick="placeOrder()" class="btn btn-outline-success w-100">Purchase</button>
 	                </div>
 	                <div class="col col-sm">
 	                    <button id="discardBtn" class="btn btn-outline-danger w-100">Discard</button>
@@ -217,4 +251,173 @@
 	
 	    </section>
 	</body>
+	<script type="text/javascript">
+		var addToCartTbl = document.getElementById("addToCartTable");
+		var checkBox =document.getElementById("isLoan");
+		var orderCashRecieved=document.getElementById("orderCashReceived");
+		var isLoan = false;
+		
+		var itemUnitPrice;
+		var itemQty;
+		var orderSubTotal;
+		var orderTotal=0;
+		var orderTotalInHome = document.getElementById("orderTotal");
+		var loanAmountInHome = document.getElementById("orderLoanAmount");
+		var orderMonthlyInstallment = document.getElementById("orderMonthlyInstallment");
+
+		var addToCartArr=new Array();
+		var qtyLeft;
+		var addToCartObj;
+		var orderIdHome = document.getElementById("orderIdHome");
+		var dropdownList = document.getElementById('itemProductHome');
+		    dropdownList.onchange = (ev) =>{
+		      let selecetedIndex = dropdownList.selectedIndex;
+		      let selectedOption = dropdownList.options[selecetedIndex];
+		      console.log("Selected text is: " + selectedOption.text);
+
+		      <%
+		      	ItemDao itmDao=new ItemDaoImpl();
+		      	List<Item>list = itmDao.getAllItems();
+		      	
+		      	
+		      	for(Item i:list){
+		      	%>
+		      		var product_id = "<%=i.getId()%>";
+		      		if(product_id==selectedOption.text){
+			      		console.log("<%=i.getCategory()%>");
+			      		var itemCat = document.getElementById("itemCategoryHome");
+			      		const catOpt = document.createElement('option');
+			      		catOpt.value = "<%=i.getCategory()%>";
+			      		catOpt.innerHTML = "<%=i.getCategory()%>";
+			      	  	itemCat.appendChild(catOpt);
+
+			      		var itemBrand = document.getElementById("itemBrandHome");
+			      		const brandOpt = document.createElement('option');
+			      		brandOpt.value = "<%=i.getBrand()%>";
+			      		brandOpt.innerHTML = "<%=i.getBrand()%>";
+			      		itemBrand.appendChild(brandOpt);
+
+			      		var itemDescription = document.getElementById("itemDescriptionHome");
+			      		itemDescription.value="<%=i.getName()%>";
+
+			      		itemQty = document.getElementById("itemQtyHome");
+			      		itemQty.value="<%=i.getQty()%>";
+
+			      		itemUnitPrice = document.getElementById("itemUnitPriceHome");
+			      		itemUnitPrice.value="<%=i.getUnitPrice()%>";
+			      	}
+		      	
+		      <%}%>
+		    }
+			function addToCart(){
+				var itmQtyOnHand =document.getElementById("itemQtyOnHandHome").value;
+				console.log("Qty On Hand = ",parseInt(itmQtyOnHand));
+				var subTotal = parseInt(itmQtyOnHand)*parseInt(itemUnitPrice.value);
+				console.log("Sub Total = ",subTotal);
+				orderSubTotal = document.getElementById("orderSubTotal");
+				orderSubTotal.value=subTotal;
+				orderTotal+=subTotal;
+				console.log("Order Total = ",orderTotal)
+				orderTotalInHome.value=orderTotal;
+				if(orderTotal>15000){
+					loanAmountInHome.value = "Loan Entry Exceded";
+				}
+				qtyLeft = parseInt(itemQtyHome.value)-parseInt(itmQtyOnHand);
+				addToCartObj = {
+						customerId:document.getElementById("customerIdHome").value,
+						productCode:document.getElementById("itemProductHome").value,
+						description:document.getElementById("itemDescriptionHome").value,
+						qtyOnHand:parseInt(itmQtyOnHand),
+						unitPrice:parseInt(itemUnitPrice.value),
+						total:subTotal
+				}
+				addToCartArr.push(addToCartObj);
+				console.log(addToCartObj)
+
+				addDetailsToAddToCartTbl();
+			}
+
+			orderCashRecieved.addEventListener('keyup', (event) => {
+				  var key = event.key;
+				  var code = event.code;
+				  let value = parseInt(orderCashRecieved.value);
+				  if(value<=15000){
+					  let amount = orderTotal-value;
+					  console.log("Cash = "+value);
+					  console.log("Amount = "+amount);
+					  loanAmountInHome.value=amount;
+
+					  let interestRate = 0.05;
+					  let numMonths = 3;
+
+					  let total = amount + (amount * interestRate);
+					  let monthlyPayment = total / numMonths;
+					  orderMonthlyInstallment.value = monthlyPayment
+					  document.getElementById("orderMonthlyInterest").value=(amount * interestRate)
+				  }
+				}, false);
+
+			function addDetailsToAddToCartTbl(){
+				let tbody = document.getElementById("tbodyInAddToCartTbl");
+				tbody.innerHTML="";
+				let count = 1;
+				addToCartArr.forEach((e)=>{
+					let tr = document.createElement("tr");
+					let tdCount = document.createElement("td");
+					tdCount.innerHTML =parseInt(count++);
+
+					let tdCustomerId = document.createElement("td");
+					tdCustomerId.innerHTML =e.customerId;
+
+					let tdProductCode = document.createElement("td");
+					tdProductCode.innerHTML =e.productCode;
+
+					let tdProductDescription = document.createElement("td");
+					tdProductDescription.innerHTML =e.description;
+
+					let tdQtyOnHand = document.createElement("td");
+					tdQtyOnHand.innerHTML =e.qtyOnHand;
+
+					let tdUnitPrice = document.createElement("td");
+					tdUnitPrice.innerHTML =e.unitPrice;
+
+					let tdTotal = document.createElement("td");
+					tdTotal.innerHTML =e.total;
+					
+					tr.append(tdCount)
+					tr.append(tdCustomerId)
+					tr.append(tdProductCode)
+					tr.append(tdProductDescription)
+					tr.append(tdQtyOnHand)
+					tr.append(tdUnitPrice)
+					tr.append(tdTotal)
+					tbody.append(tr)
+				})
+			}
+
+			window.onload = function() {
+				 generateOrderId();
+			};
+			function generateOrderId(){
+				<%OrderDao dao = new OrderDaoImpl();
+				String orderId = dao.generateOrderId();
+				%>
+				let oId = "<%=orderId%>"
+					console.log(oId);
+				orderIdHome = document.getElementById("orderIdHome");
+				orderIdHome.value = oId;
+			}
+
+			function placeOrder(){
+				let order = {
+						orderId:orderIdHome.value,
+						orderDate:"",
+						customerId:document.getElementById("customerIdHome").value,
+						loanAmount:parseFloat(loanAmountInHome.value),
+						paidAmount:parseFloat(orderTotal),
+						orderStatus:"",
+						orderDetails:""
+				}
+			}
+	</script>
 </html>

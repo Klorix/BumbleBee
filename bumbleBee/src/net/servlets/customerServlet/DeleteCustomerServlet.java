@@ -43,7 +43,7 @@ public class DeleteCustomerServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    RequestDispatcher dispatcher = request.getRequestDispatcher("register/register.jsp");
+	    RequestDispatcher dispatcher = request.getRequestDispatcher("customer/register.jsp");
 		dispatcher.forward(request, response);
 	}
 }

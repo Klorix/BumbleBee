@@ -1,3 +1,7 @@
+<%@page import="net.model.Customer"%>
+<%@page import="java.util.List"%>
+<%@page import="net.dao.customerDao.impl.CustomerDAOImpl"%>
+<%@page import="net.dao.customerDao.CustomerDao"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -40,13 +44,20 @@
 	                                <div class="row position-relative" style="height: 50%;">
 	                                    <div class="col-12 h-100 w-100 d-flex align-items-center justify-content-center"><i
 	                                            class="fas fa-user-cog start-0 end-0 top-0 bottom-0 m-auto position-absolute fs-1 text-white"
-	                                            style="width: max-content;"></i></div>
+	                                            style="width: max-content;font-size: 60px"></i></div>
 	                                </div>
 	                                <div class="row position-relative" style="height: 50%;">
 	                                    <h3 style="position: absolute;top: 5%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;">
-	                                        Daily Sales</h3>
-	                                    <p style="position: absolute;bottom: 15%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;">
-	                                        Rs. <span>1000.00</span></p>
+	                                        Customer Count</h3>
+	                                        <%CustomerDao custDao = new CustomerDAOImpl();
+	                                        List<Customer>custList = custDao.getAllCustomers();
+	                                        int custCount = 0;
+	                                        for(Customer c:custList){%>
+	                                        count++;
+	                                        <%}%>
+	                                    <p style="position: absolute;bottom: 15%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;font-size: 30px">
+	                                       <span><%=custCount %></span></p>
+	                                     
 	                                </div>
 	                            </div>
 	                        </div>
@@ -56,12 +67,12 @@
 	                                <div class="row position-relative" style="height: 50%;">
 	                                    <div class="col-12 h-100 w-100 d-flex align-items-center justify-content-center"><i
 	                                            class="fas fa-user-cog start-0 end-0 top-0 bottom-0 m-auto position-absolute fs-1 text-white"
-	                                            style="width: max-content;"></i></div>
+	                                            style="width: max-content;font-size: 60px"></i></div>
 	                                </div>
 	                                <div class="row position-relative" style="height: 50%;">
 	                                    <h3 style="position: absolute;top: 5%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;">
-	                                        Daily Sales</h3>
-	                                    <p style="position: absolute;bottom: 15%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;">
+	                                        Order Count</h3>
+	                                    <p style="position: absolute;bottom: 15%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;font-size: 30px">
 	                                        Rs. <span>1000.00</span></p>
 	                                </div>
 	                            </div>
@@ -72,12 +83,12 @@
 	                                <div class="row position-relative" style="height: 50%;">
 	                                   <div class="col-12 h-100 w-100 d-flex align-items-center justify-content-center"><i
 	                                            class="fas fa-user-cog start-0 end-0 top-0 bottom-0 m-auto position-absolute fs-1 text-white"
-	                                            style="width: max-content;"></i></div>
+	                                            style="width: max-content;font-size: 60px"></i></div>
 	                                </div>
 	                                <div class="row position-relative" style="height: 50%;">
 	                                    <h3 style="position: absolute;top: 5%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;">
 	                                        Daily Sales</h3>
-	                                    <p style="position: absolute;bottom: 15%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;">
+	                                    <p style="position: absolute;bottom: 15%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;font-size: 30px">
 	                                        Rs. <span>1000.00</span></p>
 	                                </div>
 	                            </div>
@@ -91,12 +102,12 @@
 	                                <div class="row position-relative" style="height: 50%;">
 	                                   <div class="col-12 h-100 w-100 d-flex align-items-center justify-content-center"><i
 	                                            class="fas fa-user-cog start-0 end-0 top-0 bottom-0 m-auto position-absolute fs-1 text-white"
-	                                            style="width: max-content;"></i></div>
+	                                            style="width: max-content;font-size: 60px"></i></div>
 	                                </div>
 	                                <div class="row position-relative" style="height: 50%;">
 	                                    <h3 style="position: absolute;top: 5%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;">
 	                                        Daily Sales</h3>
-	                                    <p style="position: absolute;bottom: 15%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;">
+	                                    <p style="position: absolute;bottom: 15%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;font-size: 30px">
 	                                        Rs. <span>1000.00</span></p>
 	                                </div>
 	                            </div>
@@ -107,12 +118,12 @@
 	                                <div class="row position-relative" style="height: 50%;">
 	                                    <div class="col-12 h-100 w-100 d-flex align-items-center justify-content-center"><i
 	                                            class="fas fa-user-cog start-0 end-0 top-0 bottom-0 m-auto position-absolute fs-1 text-white"
-	                                            style="width: max-content;"></i></div>
+	                                            style="width: max-content;font-size: 60px"></i></div>
 	                                </div>
 	                                <div class="row position-relative" style="height: 50%;">
 	                                    <h3 style="position: absolute;top: 5%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;">
 	                                        Daily Sales</h3>
-	                                    <p style="position: absolute;bottom: 15%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;">
+	                                    <p style="position: absolute;bottom: 15%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;font-size: 30px">
 	                                        Rs. <span>1000.00</span></p>
 	                                </div>
 	                            </div>
@@ -123,12 +134,12 @@
 	                                <div class="row position-relative" style="height: 50%;">
 	                                    <div class="col-12 h-100 w-100 d-flex align-items-center justify-content-center"><i
 	                                            class="fas fa-user-cog start-0 end-0 top-0 bottom-0 m-auto position-absolute fs-1 text-white"
-	                                            style="width: max-content;"></i></div>
+	                                            style="width: max-content;font-size: 60px"></i></div>
 	                                </div>
 	                                <div class="row position-relative" style="height: 50%;">
 	                                    <h3 style="position: absolute;top: 5%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;">
 	                                        Daily Sales</h3>
-	                                    <p style="position: absolute;bottom: 15%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;">
+	                                    <p style="position: absolute;bottom: 15%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;font-size: 30px">
 	                                        Rs. <span>1000.00</span></p>
 	                                </div>
 	                            </div>

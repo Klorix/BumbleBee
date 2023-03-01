@@ -10,16 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.dao.customerDao.CustomerDao;
+import net.dao.customerDao.impl.CustomerDAOImpl;
+
 
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-//	private LoginDao loginDao;
-//
-//	public void init() {
-//		loginDao = new LoginDao();
-//	}
+	private CustomerDao dao;
+
+	public void init() {
+		dao = new CustomerDAOImpl();
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -37,7 +40,8 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("passwordLoginId");
 		System.out.println(username);
 		System.out.println(password);
-		if(username.equals("kamal")&&password.equals("kamal")) {
+		
+		if(dao.checkCustomerByUserNameAndPassword(username, password)) {
 			request.setAttribute("loggedUser", username);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("order/order.jsp");
 			dispatcher.forward(request, response);
@@ -45,24 +49,5 @@ public class LoginServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("admin/adminDashboard.jsp");
 			dispatcher.forward(request, response);
 		}
-		/*String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		LoginBean loginBean = new LoginBean();
-		loginBean.setUsername(username);
-		loginBean.setPassword(password);
-
-		try {
-			if (loginDao.validate(loginBean)) {
-				RequestDispatcher dispatcher = request.getRequestDispatcher("todo/todo-list.jsp");
-				dispatcher.forward(request, response);
-			} else {
-				HttpSession session = request.getSession();
-				// session.setAttribute("user", username);
-				// response.sendRedirect("login.jsp");
-			}
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}*/
-
 	}
 }

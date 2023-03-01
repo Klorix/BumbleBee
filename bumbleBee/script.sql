@@ -12,6 +12,7 @@ create table admin(
 show tables;
 desc admin;
 
+drop table if exists customer;
 create table customer(
 	customerId varchar(5) primary key,
 	customerName varchar(100) not null,
@@ -20,8 +21,8 @@ create table customer(
 	customerDOB varchar(100) not null,
 	customerUserName varchar(100) not null,
 	password varchar(100) not null,
-	loanStatus int not null,
-	loanAmount DECIMAL(10, 2)
+	loanStatus int default 0,
+	loanAmount DECIMAL(10, 2) default 0.0
 );
 show tables;
 desc customer;
@@ -64,7 +65,7 @@ create table product(
 show tables;
 desc product;
 
-
+drop table if exists `order`;
 create table `order`(
 	orderId varchar(5),
 	orderDate date not null,
