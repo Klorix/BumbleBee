@@ -8,7 +8,6 @@ public class Order {
     private String customerId;
     private double loanAmount;
     private double paidAmount;
-    private int orderStatus;
     private ArrayList <OrderDetails> orderDetails;
     
     public Order() {
@@ -24,13 +23,12 @@ public class Order {
     }
     
     public Order(String orderId, String orderDate, String customerId, double loanAmount, 
-    		double paidAmount, int orderStatus, ArrayList<OrderDetails> orderDetails) {
+    		double paidAmount,  ArrayList<OrderDetails> orderDetails) {
         this.setOrderId(orderId);
         this.setOrderDate(orderDate);
         this.setCustomerId(customerId);
         this.setLoanAmount(loanAmount);
         this.setPaidAmount(paidAmount);
-        this.setOrderStatus(orderStatus);
         this.setOrderDetails(orderDetails);
     }
 
@@ -74,14 +72,6 @@ public class Order {
 		this.paidAmount = paidAmount;
 	}
 
-	private int getOrderStatus() {
-		return orderStatus;
-	}
-
-	private void setOrderStatus(int orderStatus) {
-		this.orderStatus = orderStatus;
-	}
-
 	private ArrayList <OrderDetails> getOrderDetails() {
 		return orderDetails;
 	}
@@ -93,7 +83,7 @@ public class Order {
 	@Override
 	public String toString() {
 		return "Order [orderId=" + orderId + ", orderDate=" + orderDate + ", customerId=" + customerId + ", loanAmount="
-				+ loanAmount + ", paidAmount=" + paidAmount + ", orderStatus=" + orderStatus + ", orderDetails="
+				+ loanAmount + ", paidAmount=" + paidAmount + ", orderDetails="
 				+ orderDetails + "]";
 	}
 	

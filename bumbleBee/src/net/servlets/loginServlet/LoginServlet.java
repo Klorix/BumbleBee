@@ -45,8 +45,11 @@ public class LoginServlet extends HttpServlet {
 			request.setAttribute("loggedUser", username);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("order/order.jsp");
 			dispatcher.forward(request, response);
-		}else {
+		}else if(username.equals("admin") && password.equals("admin")){
 			RequestDispatcher dispatcher = request.getRequestDispatcher("admin/adminDashboard.jsp");
+			dispatcher.forward(request, response);
+		}else {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("login/login.jsp");
 			dispatcher.forward(request, response);
 		}
 	}
