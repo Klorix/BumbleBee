@@ -70,7 +70,6 @@ create table `order`(
 	orderId varchar(5),
 	orderDate date not null,
 	customerId varchar(6),
-	orderStatus int not null,
 	loanAmount DECIMAL(10, 2),
 	paidAmount DECIMAL(10, 2),
 	constraint primary key(orderId),
