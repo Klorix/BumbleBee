@@ -244,22 +244,22 @@
 	                    <button id="purchaseBtn" onClick="placeOrder()" class="btn btn-outline-success w-100">Purchase</button>
 	                </div>
 	                <div class="col col-sm">
-	                    <button id="discardBtn" class="btn btn-outline-danger w-100">Discard</button>
+	                    <button id="discardBtn" onClick="discard()" class="btn btn-outline-danger w-100">Discard</button>
 	                </div>
 	            </div>
 	        </div>
 	
 	    </section>
 	</body>
-	<script type="text/javascript">
+	<script type="text/javascript" async defer onload="onload">
 		var addToCartTbl = document.getElementById("addToCartTable");
 		var checkBox =document.getElementById("isLoan");
 		var orderCashRecieved=document.getElementById("orderCashReceived");
 		var isLoan = false;
 		
-		var itemUnitPrice;
+		var itemUnitPrice  = document.getElementById("itemUnitPriceHome");
 		var itemQty;
-		var orderSubTotal;
+		var orderSubTotal = document.getElementById("orderSubTotal");
 		var orderTotal=0;
 		var orderTotalInHome = document.getElementById("orderTotal");
 		var loanAmountInHome = document.getElementById("orderLoanAmount");
@@ -270,8 +270,8 @@
 		var addToCartObj;
 		var orderIdHome = document.getElementById("orderIdHome");
 		var dropdownList = document.getElementById('itemProductHome');
-		var tbody;
-		var contextPath = 
+		var tbody = document.getElementById("tbodyInAddToCartTbl");
+		var contextPath;
 		    dropdownList.onchange = (ev) =>{
 		      let selecetedIndex = dropdownList.selectedIndex;
 		      let selectedOption = dropdownList.options[selecetedIndex];
@@ -397,18 +397,34 @@
 					tbody.append(tr)
 				})
 			}
+			window.addEventListener("load", async(event) => {
+				console.log("page is fully loaded");
+				  await generateOrderId();
+				});
+			 async function generateOrderId(){
+				 let options = {
+				            method: 'GET',
+				            headers: {
+				                'Content-Type': 
+				                    'text/html',
+				                    'Accept': 'text/html'
+				 			}
+			       }
+			       let oId = null;
+				    let resJson = await fetch("<%=request.getContextPath()%>/placeOrder", 
+	                        options).then(async response =>{
+		                        oId = await response.text();
+					        return await response;
 
-			window.onload = function() {
-				 generateOrderId();
-			};
-			function generateOrderId(){
-				<%OrderDao dao = new OrderDaoImpl();
-				String orderId = dao.generateOrderId();
-				%>
-				let oId = "<%=orderId%>"
-					console.log(oId);
-				orderIdHome = document.getElementById("orderIdHome");
-				orderIdHome.value = oId;
+					    })
+						
+				    console.log("Response = ",resJson.status);
+					    if(resJson.status==200){
+					    	console.log("Order Id = ",oId);
+							orderIdHome.value = oId;
+						    clearFields();
+						    }
+				return resJson;
 			}
 
 			async function placeOrder(){
@@ -450,9 +466,10 @@
 				        return await response;
 
 				    })
-					console.log(resJson)
+					console.log(resJson);
 				    if(resJson.success==true){
 					    alert("Order Placed Successfully");
+						await generateOrderId();
 					    clearFields();
 					    }
 			}
@@ -465,13 +482,15 @@
 				document.getElementById("itemDescriptionHome").value="";
 				document.getElementById("itemQtyOnHandHome").value="";
 				document.getElementById("itemQtyHome").value="";
-				document.getElementById("itemQtyHome").value="";
 				orderSubTotal.value="";
 				document.getElementById("orderMonthlyInterest").value="";
 				orderTotalInHome.value="";
 				itemUnitPrice.value="";
 				orderMonthlyInstallment.value="";
-				orderIdHome.value = generateOrderId();
 				}
+
+			function discard(){
+				clearFields();
+			}
 	</script>
 </html>

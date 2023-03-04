@@ -1,3 +1,5 @@
+<%@page import="net.dao.OrderDao.impl.OrderDaoImpl"%>
+<%@page import="net.dao.OrderDao.OrderDao"%>
 <%@page import="net.model.Customer"%>
 <%@page import="java.util.List"%>
 <%@page import="net.dao.customerDao.impl.CustomerDAOImpl"%>
@@ -71,8 +73,10 @@
 	                                <div class="row position-relative" style="height: 50%;">
 	                                    <h3 style="position: absolute;top: 5%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;">
 	                                        Order Count</h3>
+	                                        <%OrderDao orderDao = new OrderDaoImpl();
+	                                        int count = orderDao.countOrders();%>    
 	                                    <p style="position: absolute;bottom: 15%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;font-size: 30px">
-	                                        Rs. <span>1000.00</span></p>
+	                                       <span><%=count%></span></p>
 	                                </div>
 	                            </div>
 	                        </div>
@@ -86,9 +90,9 @@
 	                                </div>
 	                                <div class="row position-relative" style="height: 50%;">
 	                                    <h3 style="position: absolute;top: 5%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;">
-	                                        Daily Sales</h3>
+	                                        Total Income</h3>
 	                                    <p style="position: absolute;bottom: 15%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;font-size: 30px">
-	                                        Rs. <span>1000.00</span></p>
+	                                        Rs. <span><%= orderDao.totalIncome()%></span></p>
 	                                </div>
 	                            </div>
 	                        </div>

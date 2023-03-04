@@ -181,8 +181,8 @@
 	                    <li class="nav-item position-relative" style="width:5%"><a class="nav-link text-white" href="<%=request.getContextPath()%>/admin/adminDashboard.jsp" id="Home"><span
 	                            style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Home</span></a>
 	                    </li>
-	                    <li class="nav-item position-relative" style="width:10%"><a class="nav-link text-white" href="#" id="Orders"><span
-	                            style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Orders</span></a>
+	                    <li class="nav-item position-relative" style="width:10%"><a class="nav-link text-white" href="<%=request.getContextPath()%>/admin/orderDetails.jsp" id="Orders"><span
+	                            style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">View Orders</span></a>
 	                    </li>
 	                    <li class="nav-item position-relative" style="width:10%"><a class="nav-link text-white" id="Items" href="<%=request.getContextPath()%>/saveItem"><span
 		                        style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Manage Items</span></a>

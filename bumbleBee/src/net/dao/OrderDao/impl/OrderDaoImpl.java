@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.dao.OrderDao.OrderDao;
 import net.dao.OrderDetailsDao.OrderDetailsDao;
@@ -29,10 +31,13 @@ public class OrderDaoImpl implements OrderDao{
 				int temp = Integer.parseInt(rst.getString(1).split("-")[1]);
 				temp = temp+1;
 				if(temp<=9) {
+					System.out.println("O-00"+temp);
 					return "O-00"+temp;
 				}else if(temp<=99) {
+					System.out.println("O-0"+temp);
 					return "O-0"+temp;
 				}else {
+					System.out.println("O-"+temp);
 					return "O-"+temp;
 				}
 			}else {
@@ -131,5 +136,67 @@ public class OrderDaoImpl implements OrderDao{
 			JDBCUtils.printSQLException(e);
 		}
 		return false;
+	}
+
+	@Override
+	public int countOrders() {
+		try (Connection connection = JDBCUtils.getConnection();
+				// Step 2:Create a statement using connection object
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(orderId) from `order`")) {
+			System.out.println(preparedStatement);
+			ResultSet rst = preparedStatement.executeQuery();
+			int count = 0;
+			if(rst.next()) {
+				count = rst.getInt(1);
+			}
+			System.out.println("Count = "+count);
+			return count;
+			// Step 3: Execute the query or update query
+		} catch (SQLException e) {
+			// process sql exception
+			JDBCUtils.printSQLException(e);
+		}
+		return 0;
+	}
+
+	@Override
+	public double totalIncome() {
+		try (Connection connection = JDBCUtils.getConnection();
+				// Step 2:Create a statement using connection object
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT SUM(paidAmount) from `order`")) {
+			System.out.println(preparedStatement);
+			ResultSet rst = preparedStatement.executeQuery();
+			double income = 0;
+			if(rst.next()) {
+				income = rst.getInt(1);
+			}
+			System.out.println("Income = "+income);
+			return income;
+			// Step 3: Execute the query or update query
+		} catch (SQLException e) {
+			// process sql exception
+			JDBCUtils.printSQLException(e);
+		}
+		return 0.0;
+	}
+
+	@Override
+	public List<Order> getOrders() {
+		try (Connection connection = JDBCUtils.getConnection();
+				// Step 2:Create a statement using connection object
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from `order`")) {
+			System.out.println(preparedStatement);
+			ResultSet rst = preparedStatement.executeQuery();
+			List<Order>orders = new ArrayList<Order>();
+			while(rst.next()) {
+				orders.add(new Order(rst.getString(1),rst.getDate(2),rst.getString(3),rst.getDouble(4),rst.getDouble(5)));
+			}
+			return orders;
+			// Step 3: Execute the query or update query
+		} catch (SQLException e) {
+			// process sql exception
+			JDBCUtils.printSQLException(e);
+		}
+		return null;
 	}
 }

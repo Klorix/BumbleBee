@@ -178,7 +178,7 @@
 	            <div class="collapse navbar-collapse position-relative" id="navbarText">
 	                <ul class="position-absolute navbar-nav flex-row w-100 justify-content-start fs-6 px-4"
 	                    style="left:200px;">
-	                     <li class="nav-item position-relative" ><a class="nav-link text-white" id="Order" href="<%=request.getContextPath()%>/placeOrder"><span
+	                     <li class="nav-item position-relative" ><a class="nav-link text-white" id="Order" href="<%=request.getContextPath()%>/order/order.jsp"><span
 		                        style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;width: max-content;height: max-content;">Place Order</span></a>
 	                   
 	                    </li>

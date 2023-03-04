@@ -37,9 +37,8 @@ public class PlaceOrderServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//getAllItems(request);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("order/order.jsp");
-		dispatcher.forward(request, response);
+		generateOrderId(request,response);
+		
 	}
 
 	private void placeOrder(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -56,7 +55,7 @@ public class PlaceOrderServlet extends HttpServlet {
 	    Order orderObj = new Gson().fromJson(sb.toString(), Order.class);
 	    orderObj.setOrderDate(new Date());
 	    System.out.println(orderObj);
-	    //orderDao.placeOrder(orderObj)
+	    orderDao.placeOrder(orderObj);
 	    if(true) {
 	    	String resp = new Gson().toJson(new PlaceOrderResponse(true));
 	    	// Write content type and also length (determined via byte array).
@@ -70,8 +69,21 @@ public class PlaceOrderServlet extends HttpServlet {
 	        out.flush();
 	    }
 	}
-	public void getAllItems(HttpServletRequest request) {
-		/*List<Item>items = itemDao.getAllItems();
-		request.setAttribute("itemDetails", items);*/
+	public void generateOrderId(HttpServletRequest request,HttpServletResponse response) {
+		String orderId = orderDao.generateOrderId();
+		response.setContentType("text/html");
+    	response.setHeader("Body", orderId);
+    	PrintWriter out;
+		try {
+			out = response.getWriter();
+			 response.setContentType("text/html");
+		        response.setCharacterEncoding("UTF-8");
+		        out.print(orderId);
+		        out.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+       
 	}
 }
