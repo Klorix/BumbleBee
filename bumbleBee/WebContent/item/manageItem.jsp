@@ -187,4 +187,91 @@
 	        </div>
 	    </section>
 	</body>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script>
+	var productIdInManageItemsPattern = /^(P-)[0-9]{3}$/;
+	var productNameInManageItemsPattern = /^[0-9A-z ]+[.]*[/]*[(]*[)]*[']*[,]*[&]*[-]*$/;
+	var productQtyInManageItemsPattern =  /^[0-9]+$/;
+	var productUnitPriceInManageItemsPattern = /^[0-9.]{1,}$/;
+	var productStatusInManageItemsPattern =  /^[0-9.]{1,}$/;
+
+	var productIdInManageItems = $("#productIdInManageItems");
+	var productNameInManageItems = $("#productNameInManageItems");
+	var productQtyInManageItems = $("#productQtyInManageItems");
+	var productUnitPriceInManageItems = $("#productUnitPriceInManageItems");
+	var productStatusInManageItems = $("#productStatusInManageItems");
+
+	var saveItemsBtn = $("#saveItems");
+	var updateItemBtn = $("#updateItemBtn");
+	var deleteItemBtn = $("#deleteItemBtn");
+	
+	
+	var itemsArray = [productIdInManageItems, productNameInManageItems, productQtyInManageItems, productUnitPriceInManageItems, productStatusInManageItems];
+	productIdInManageItems.keyup(function (e) {
+	    let index = 0;
+	    var itemCodeLbl = $("#itemCodeLblInItems span");
+	    if (validate(productIdInManageItemsPattern, itemsArray, index, e, saveItemsBtn, updateItemBtn, deleteItemBtn) == true) {
+	        itemCodeLbl.text("Product ID");
+	    } else {
+	        itemCodeLbl.text("Please use the given format (P-001)");
+	    }
+	});
+	productNameInManageItems.keyup(function (e) {
+		let index = 1;
+	    var itemCodeLbl = $("#itemDescriptionLblInItems span");
+	    if (validate(productNameInManageItemsPattern, itemsArray, index, e, saveItemsBtn, updateItemBtn, deleteItemBtn) == true) {
+	        itemCodeLbl.text("Product Name");
+	    } else {
+	        itemCodeLbl.text("Please use the correct format");
+	    }
+	});
+	productQtyInManageItems.keyup(function (e) {
+		let index = 2;
+	    var itemCodeLbl = $("#itemQtyLblInItems span");
+	    if (validate(productQtyInManageItemsPattern, itemsArray, index, e, saveItemsBtn, updateItemBtn, deleteItemBtn) == true) {
+	        itemCodeLbl.text("Qty");
+	    } else {
+	        itemCodeLbl.text("Please use only numbers");
+	    }
+	});
+	productUnitPriceInManageItems.keyup(function (e) {
+		let index = 3;
+	    var itemCodeLbl = $("#itemUnitPriceLblInItems span");
+	    if (validate(productUnitPriceInManageItemsPattern, itemsArray, index, e, saveItemsBtn, updateItemBtn, deleteItemBtn) == true) {
+	        itemCodeLbl.text("Unit Price");
+	    } else {
+	        itemCodeLbl.text("Please use only number");
+	    }
+	});
+	productStatusInManageItems.keyup(function (e) {
+		let index = 4;
+	    var itemCodeLbl = $("#itemStatusLblInItems span");
+	    if (validate(productStatusInManageItemsPattern, itemsArray, index, e, saveItemsBtn, updateItemBtn, deleteItemBtn) == true) {
+	        itemCodeLbl.text("Product Status");
+	    } else {
+	        itemCodeLbl.text("Please insert 0 as false and true as 1)");
+	    }
+	});
+
+	function validate(pattern, array, index, e, saveBtn, updateBtn, deleteBtn) {
+	    if (pattern.test(array[index].val())) {
+	        array[index].css("border", "3px solid green");
+	        if (e.key === 'Enter') {
+	            array[index + 1].focus();
+	        }
+	        saveBtn.prop("disabled", false);
+	        updateBtn.prop("disabled", false);
+	        deleteBtn.prop("disabled", false);
+	        return true;
+	    } else {
+	        array[index].css("border", "3px solid red");
+	        saveBtn.prop("disabled", true);
+	        updateBtn.prop("disabled", true);
+	        deleteBtn.prop("disabled", true);
+	        return false;
+	    }
+	    return false;
+	}
+			
+	</script>
 </html>

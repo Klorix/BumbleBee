@@ -120,13 +120,6 @@
 		}
 		
 	</style>
-	<script type="text/javascript">
-		document.getElementById("addSignupDetailsBtn").addEventListener('click',function (){
-			var msg = "<%=message%>";
-		    alert(msg);
-		}); 
-	    
-</script>
 </head>
 
 </head>
@@ -167,7 +160,7 @@
 	
 	                        <div class="col-12 col-sm-12 col-md">
 	                            <div class="form-floating position-relative shadow">
-	                            	<label id="signUpNicLbl" for="signUpDob" class="position-relative"><span
+	                            	<label id="signUpDOBLbl" for="signUpDob" class="position-relative"><span
 	                                        style="width: 100%;">Date of Birth</span></label>
 	                                <input type="text" class="form-control bg-transparent" id="signUpDob" name="signUpDob" placeholder="Date of Birth"
 	                                       style="height: 50px;">
@@ -223,15 +216,6 @@
 	                        <button id="addSignupDetailsBtn" class="btn btn-outline-success" style="width: 100%;" type="submit" formaction="<%=request.getContextPath()%>/registerCustomer" formmethod="post">Add
 	                        </button>
 	                    </div>
-	                    <div class="col-6 col-sm-6 col-md">
-	                        <button id="updateSignupDetailsBtn" class="btn btn-outline-secondary" style="width: 100%;"" type="submit" formaction="<%=request.getContextPath()%>/updateCustomer" formmethod="post">
-	                            Update
-	                        </button>
-	                    </div>
-	                    <div class="col">
-	                        <button id="deleteSignupDetailsBtn" class="btn btn-outline-danger" style="width: 100%;"" type="submit" formaction="<%=request.getContextPath()%>/deleteCustomer" formmethod="post">Delete
-	                        </button>
-	                    </div>
 	                </div>
             	</form>
                 
@@ -240,4 +224,127 @@
     </section>
    </main>
 </body>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script>
+	var cusIdPattern = /^(C-)[0-9]{3}$/;
+	var cusNamePattern = /^[A-z ]+$/;
+	var cusDobPattern = /^[0-9]{4}[-][0-9]{2}[-][0-9]{2}$/;
+	var cusContactPattern = /^[0-9]{10}$/;
+	var cusUserNamePattern = /^([A-z]{3,}[.]*[A-z]*[0-9]*[@]?((gmail.com)|(yahoo.com)?))$/;
+	var cusPasswordPattern = /^([A-z0-9]{3,}[.]*[A-z0-9]*[@]?)$/;
+	var cusAddressPattern = /^[A-z0-9.,/ ]*$/
+
+	var cusId = $('#signUpId');
+	var cusName = $('#signUpName');
+	var cusDob = $('#signUpDob');
+	var cusContactNo = $('#signUpContactNo');
+	var cusUserName = $('#signUpUserName');
+	var cusPassword = $('#signUpPassword');
+	var cusAddress = $('#signUpAddress');	
+
+	var cusIdLbl = $('#signUpIdLbl span');
+	var cusNameLbl = $('#signUpNameLbl span');
+	var cusDobLbl = $('#signUpDOBLbl span');
+	var cusContactNoLbl = $('#signUpContactNoLbl span');
+	var cusUserNameLbl = $('#signUpUserNameLbl span');
+	var cusPasswordLbl = $('#signUpPasswordLbl span');
+	var cusAddressLbl = $('#signUpAddressLbl span');	
+
+	var saveBtn = $("#addSignupDetailsBtn");
+	
+	var cusInputsArr = [cusId, cusName,cusDob, cusContactNo, cusUserName, cusPassword,cusAddress];
+
+	cusId.off('keyup');
+	cusId.keyup(function (e) {
+	    console.log("cusId keyUp")
+	    let index = 0;
+	    if (validate(cusIdPattern, cusInputsArr, index, e, saveBtn) == true) {
+	        cusIdLbl.text("Id");
+	    } else {
+	        cusIdLbl.text("Please use (C-001)");
+	    }
+	})
+	cusDob.off('keyup');
+	cusDob.keyup(function (e) {
+	    let index = 2;
+	    if (validate(cusDobPattern, cusInputsArr, index, e, saveBtn) == true) {
+	    	cusDobLbl.css('font-size', 'unset');
+	    	cusDobLbl.text("Name");
+	    } else {
+	    	cusDobLbl.css('font-size', '12px');
+	    	cusDobLbl.text("Please use (2023-01-01)");
+	    }
+	})
+	
+	cusName.off('keyup');
+	cusName.keyup(function (e) {
+	    let index = 1;
+	    if (validate(cusNamePattern, cusInputsArr, index, e, saveBtn) == true) {
+	        cusNameLbl.css('font-size', 'unset');
+	        cusNameLbl.text("Name");
+	    } else {
+	        cusNameLbl.css('font-size', '12px');
+	        cusNameLbl.text("Please use (Kamal Bandara)");
+	    }
+	})
+	cusContactNo.off('keyup');
+	cusContactNo.keyup(function (e) {
+	    let index = 3;
+	    if (validate(cusContactPattern, cusInputsArr, index, e, saveBtn) == true) {
+	    	cusContactNoLbl.text("Contact No");
+	    } else {
+	    	cusContactNoLbl.text("Please use only 10 digits");
+	    }
+	})
+	
+	cusUserName.off('keyup');
+	cusUserName.keyup(function (e) {
+	    let index = 4;
+	    if (validate(cusUserNamePattern, cusInputsArr, index, e, saveBtn) == true) {
+	    	cusUserNameLbl.text("User Name");
+	    } else {
+	    	cusUserNameLbl.text("Please use valid Username");
+	    }
+	})
+	
+	cusPassword.off('keyup');
+	cusPassword.keyup(function (e) {
+	    let index = 5;
+	    if (validate(cusPasswordPattern, cusInputsArr, index, e, saveBtn) == true) {
+	    	cusPasswordLbl.text("User Name");
+	    } else {
+	    	cusPasswordLbl.text("Please use valid Password");
+	    }
+	})
+	cusAddress.off('keyup');
+	cusAddress.keyup(function (e) {
+	    let index = 6;
+	    if (validate(cusAddressPattern, cusInputsArr, index, e, saveBtn) == true) {
+	    	cusAddressLbl.text("Address");
+	    } else {
+	    	cusAddressLbl.text("Please use only these special characters (.,/)");
+	    }
+	})
+	function validate(pattern, array, index, e, saveBtn) {
+	    if (pattern.test(array[index].val())) {
+	        array[index].css("border", "3px solid green");
+	        if (e.key === 'Enter') {
+	            array[index + 1].focus();
+	        }
+	        saveBtn.prop("disabled", false);
+	        return true;
+	    } else {
+	        array[index].css("border", "3px solid red");
+	        saveBtn.prop("disabled", true);
+	        return false;
+	    }
+	    return false;
+	}
+
+	saveBtn.off('click');
+	saveBtn.click(function () {
+		var msg = "<%=message%>";
+	    alert(msg);
+	})
+	</script>
 </html>

@@ -115,4 +115,58 @@
 	        </div>
 	    </section>
 	</body>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script>
+	var brandIdInManageItemsPattern = /^(B-)[0-9]{3}$/;
+	var brandNameInManageItemsPattern = /^[0-9A-z ]+[.]*[/]*[(]*[)]*[']*[,]*[&]*[-]*$/;
+	
+	var productBrand = $("#brandIdInManageCategory");
+	var productBrandName = $("#brandNameInManageBrand");
+
+	var saveBtn = $("#saveBrand");
+	var updateBtn = $("#updateBrandBtn");
+	var deleteBtn = $("#deleteBrandBtn");
+	
+	
+	var itemsArray = [productBrand, productBrandName];
+	productBrand.keyup(function (e) {
+	    let index = 0;
+	    var itemCodeLbl = $("#brandIdLblInBrand span");
+	    if (validate(brandIdInManageItemsPattern, itemsArray, index, e, saveBtn, updateBtn, deleteBtn) == true) {
+	        itemCodeLbl.text("Brand ID");
+	    } else {
+	        itemCodeLbl.text("Please use the given format (B-001)");
+	    }
+	});
+	productBrandName.keyup(function (e) {
+		let index = 1;
+	    var itemCodeLbl = $("#brandNameLblInBrand span");
+	    if (validate(brandNameInManageItemsPattern, itemsArray, index, e,  saveBtn, updateBtn, deleteBtn) == true) {
+	        itemCodeLbl.text("Brand Name");
+	    } else {
+	        itemCodeLbl.text("Please use the correct format");
+	    }
+	});
+
+	function validate(pattern, array, index, e, saveBtn, updateBtn, deleteBtn) {
+	    if (pattern.test(array[index].val())) {
+	        array[index].css("border", "3px solid green");
+	        if (e.key === 'Enter') {
+	            array[index + 1].focus();
+	        }
+	        saveBtn.prop("disabled", false);
+	        updateBtn.prop("disabled", false);
+	        deleteBtn.prop("disabled", false);
+	        return true;
+	    } else {
+	        array[index].css("border", "3px solid red");
+	        saveBtn.prop("disabled", true);
+	        updateBtn.prop("disabled", true);
+	        deleteBtn.prop("disabled", true);
+	        return false;
+	    }
+	    return false;
+	}
+			
+	</script>
 </html>

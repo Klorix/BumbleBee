@@ -251,6 +251,7 @@
 	
 	    </section>
 	</body>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script type="text/javascript" async defer onload="onload">
 		var addToCartTbl = document.getElementById("addToCartTable");
 		var checkBox =document.getElementById("isLoan");
@@ -491,6 +492,45 @@
 
 			function discard(){
 				clearFields();
+			}
+
+			var itemQtyOnHandPattern = /^[0-9]+$/;
+			var addToCartBtn = $('#addToCartBtn');
+			var arr1 = [$('#itemQtyOnHandHome')]
+			$('#itemQtyOnHandHome').off('keyup');
+			$('#itemQtyOnHandHome').keyup(function (e) {
+			    let index = 0;
+			    if (validate(itemQtyOnHandPattern, arr1, index, e, addToCartBtn) == true) {
+			    	$('#qtyOnHandLbl').text("Qty On Hand");
+			    } else {
+			    	$('#qtyOnHandLbl').text("Please use only numbers");
+			    }
+			})
+			var arr2 = [$('#orderCashReceived')]
+			var orderCashReceivedPattern = /^[0-9]+$/;
+			var purchaseBtn = $('#purchaseBtn');
+			$('#orderCashReceived').off('keyup');
+			$('#orderCashReceived').keyup(function (e) {
+			    let index = 0;
+			    if (validate(orderCashReceivedPattern, arr2, index, e, purchaseBtn) == true) {
+			    } else {
+			    }
+			})
+			
+			function validate(pattern, array, index, e, saveBtn) {
+			    if (pattern.test(array[index].val())) {
+			        array[index].css("border", "3px solid green");
+			        if (e.key === 'Enter') {
+			            array[index + 1].focus();
+			        }
+			        saveBtn.prop("disabled", false);
+			        return true;
+			    } else {
+			        array[index].css("border", "3px solid red");
+			        saveBtn.prop("disabled", true);
+			        return false;
+			    }
+			    return false;
 			}
 	</script>
 </html>
