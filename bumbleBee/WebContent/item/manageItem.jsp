@@ -1,3 +1,5 @@
+<%@page import="net.dao.itemDao.impl.ItemDaoImpl"%>
+<%@page import="net.dao.itemDao.ItemDao"%>
 <%@page import="net.model.Brand"%>
 <%@page import="net.dao.BrandDao.impl.BrandDaoImpl"%>
 <%@page import="net.dao.BrandDao.BrandDao"%>
@@ -44,8 +46,12 @@
 		                    <div class="row position-relative" style="top: 0;">
 		                        <div class="col-6 col-sm-6 col-md position-relative">
 		                            <div class="form-floating position-relative">
+		                            <%
+	                                        ItemDao dao = new ItemDaoImpl();
+	                                		String itemId = dao.generateItemCode();
+	                                		System.out.println("Item ID = "+itemId);%>
 		                                <input type="text" class="form-control bg-transparent border-3 w-100"
-		                                       id="productIdInManageItems" name="productIdInManageItems" placeholder="Product ID" style="height: 40px;">
+		                                       id="productIdInManageItems" name="productIdInManageItems" placeholder="Product ID" style="height: 40px;" value=<%=itemId %>>
 		                                <label for="productIdInManageItems" id="itemCodeLblInItems"><span>Product ID</span></label>
 		                            </div>
 		                        </div>

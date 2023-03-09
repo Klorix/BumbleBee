@@ -10,4 +10,5 @@ public interface BrandDao {
 	public boolean deleteBrand(String id);
 	public List<Brand> getBrandDetails();
 	public Brand searchBrandByName(String name);
+	public String generateBrandId();
 }

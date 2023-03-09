@@ -24,7 +24,7 @@ public class InitServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action = request.getServletPath();
-		RequestDispatcher dispatcher = request.getRequestDispatcher("login/login.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("login/customerLogin.jsp");
 		dispatcher.forward(request, response);
 	}
 }

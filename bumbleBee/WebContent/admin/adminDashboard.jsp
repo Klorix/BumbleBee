@@ -55,10 +55,10 @@
 	                                        List<Customer>custList = custDao.getAllCustomers();
 	                                        int custCount = 0;
 	                                        for(Customer c:custList){
-	                                        	custCount++;%>    
+	                                        	custCount++;%>   <%}%> 
 	                                    <p style="position: absolute;bottom: 15%;left: 0;right: 0;margin: auto;width: max-content;height: max-content;font-size: 30px">
-	                                       <span><%=custCount %></span></p>
-	                                     <%}%>
+	                                       <span><%=custCount%></span></p>
+	                                     
 	                                </div>
 	                            </div>
 	                        </div>

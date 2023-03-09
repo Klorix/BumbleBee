@@ -143,4 +143,35 @@ public class CustomerDAOImpl implements CustomerDao{
 		return false;
 	}
 
+	@Override
+	public String generateCustomerId() {
+		try (Connection connection = JDBCUtils.getConnection();
+				// Step 2:Create a statement using connection object
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT customerId from Customer order by customerId DESC LIMIT 1")) {
+			System.out.println(preparedStatement);
+			ResultSet rst = preparedStatement.executeQuery();
+			if(rst.next()) {
+				int temp = Integer.parseInt(rst.getString(1).split("-")[1]);
+				temp = temp+1;
+				if(temp<=9) {
+					System.out.println("C-00"+temp);
+					return "C-00"+temp;
+				}else if(temp<=99) {
+					System.out.println("C-0"+temp);
+					return "C-0"+temp;
+				}else {
+					System.out.println("C-"+temp);
+					return "C-"+temp;
+				}
+			}else {
+				return "C-001";
+			}
+			// Step 3: Execute the query or update query
+		} catch (SQLException e) {
+			// process sql exception
+			JDBCUtils.printSQLException(e);
+		}
+		return null;
+	}
+
 }

@@ -10,4 +10,5 @@ public interface ItemDao {
 	public boolean deleteItem(String itemId) throws ClassNotFoundException;
 	public List<Item> getAllItems();
 	public Item searchItem(String id);
+	public String generateItemCode();
 }

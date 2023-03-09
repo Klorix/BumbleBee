@@ -1,3 +1,5 @@
+<%@page import="net.dao.BrandDao.impl.BrandDaoImpl"%>
+<%@page import="net.dao.BrandDao.BrandDao"%>
 <%@page import="net.model.Brand"%>
 <%@page import="net.model.Category"%>
 <%@page language="java" import="java.util.*" %>
@@ -39,8 +41,12 @@
 		                    <div class="row position-relative" style="top: 0;">
 		                        <div class="col-6 col-sm-6 col-md position-relative">
 		                            <div class="form-floating position-relative">
+		                            <%
+	                                        BrandDao dao = new BrandDaoImpl();
+	                                		String brandId = dao.generateBrandId();
+	                                		System.out.println("Brand Id = "+brandId);%>
 		                                <input type="text" class="form-control bg-transparent border-3 w-100"
-		                                       id="brandIdInManageCategory" name="brandIdInManageBrand" placeholder="Brand ID" style="height: 40px;">
+		                                       id="brandIdInManageCategory" name="brandIdInManageBrand" placeholder="Brand ID" style="height: 40px;" value=<%=brandId %>>
 		                                <label for="brandIdInManageBrand" id="brandIdLblInBrand"><span>Brand ID</span></label>
 		                            </div>
 		                        </div>

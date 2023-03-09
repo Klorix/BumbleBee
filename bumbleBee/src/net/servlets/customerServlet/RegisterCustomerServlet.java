@@ -1,6 +1,9 @@
 package net.servlets.customerServlet;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -10,10 +13,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import net.dao.customerDao.CustomerDao;
 import net.dao.customerDao.impl.CustomerDAOImpl;
 import net.model.Customer;
 import net.model.Item;
+import net.model.Order;
+import net.utils.PlaceOrderResponse;
 
 @WebServlet("/registerCustomer")
 public class RegisterCustomerServlet extends HttpServlet {
@@ -37,38 +44,39 @@ public class RegisterCustomerServlet extends HttpServlet {
 	}
 
 	private void register(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		String signUpId = request.getParameter("signUpId");
-		String signUpName = request.getParameter("signUpName");
-		String signUpDob = request.getParameter("signUpDob");
-		String signUpContactNo = request.getParameter("signUpContactNo");
-		String signUpUserName = request.getParameter("signUpUserName");
-		String signUpPassword = request.getParameter("signUpPassword");
-		String signUpAddress = request.getParameter("signUpAddress");
-		
-		System.out.println(signUpId);
-		System.out.println(signUpName);
-		System.out.println(signUpDob);
-		System.out.println(signUpContactNo);
-		System.out.println(signUpUserName);
-		System.out.println(signUpPassword);
-		System.out.println(signUpAddress);
-		
-		
-	    
-	    Customer c = new Customer(signUpId,signUpName,signUpDob,signUpContactNo,signUpUserName,signUpPassword,signUpAddress);
+		StringBuilder sb = new StringBuilder();
+	    BufferedReader reader = request.getReader();
+	    try {
+	        String line;
+	        while ((line = reader.readLine()) != null) {
+	            sb.append(line).append('\n');
+	        }
+	    } finally {
+	        reader.close();
+	    }
+	    Customer c = new Gson().fromJson(sb.toString(), Customer.class);
+	    System.out.println("Customer Obj = "+c);
 	    try {
 			if(customerDao.saveCustomer(c) == true) {
-				request.setAttribute("NOTIFICATION", "Customer Registered Successfully!");
+				String resp = new Gson().toJson(new PlaceOrderResponse(true));
+		    	// Write content type and also length (determined via byte array).
+		    	RequestDispatcher dispatcher = request.getRequestDispatcher("login/customerLogin.jsp");
+		    	response.setContentType("application/json");
+		    	response.setHeader("Body", resp);
+		    	PrintWriter out = response.getWriter();
+		        response.setContentType("application/json");
+		        response.setCharacterEncoding("UTF-8");
+		        out.print(resp);
+		        out.flush();
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    RequestDispatcher dispatcher = request.getRequestDispatcher("customer/register.jsp");
-		dispatcher.forward(request, response);
 	}
 	public void getAllCustomers(HttpServletRequest request) {
 		List<Customer>customers = customerDao.getAllCustomers();
 		request.setAttribute("customerDetails", customers);
 	}
+	
 }

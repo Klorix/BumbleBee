@@ -1,5 +1,7 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +20,7 @@
              style="position: absolute;inset: 0 0 0 0;margin: auto;width: 50%;height: 70%;background-color: rgb(228, 225, 225) !important;border-radius: 20px;">
             <h3 style="position: absolute;left: 0;right: 0;margin: auto;width: max-content;top: 40px;">Bumble bee</h3>
            
-           <form action="<%=request.getContextPath()%>/login" method="POST">
+           <form action="<%=request.getContextPath()%>/customerLogin" method="POST">
 	           <div class="row position-absolute"
 	                 style="top: 25%;left: 0;right: 0;margin: auto;width: 400px;height: max-content;">
 	                <div class="col">
@@ -44,6 +46,14 @@
 	                <div class="col-12">
 				      <a href="#" id="loginBtn">
 	                        <button class="btn btn-outline-success shadow w-100">Login</button>
+	                    </a>
+	                </div>
+	            </div>
+	            <div class="row"
+	                 style="position:absolute;top: 86%;right: 0;margin: auto;width: max-width;height: 40px;">
+	                <div class="col-12">
+				      <a href="<%=request.getContextPath()%>/login/adminLogin.jsp" id="adminLoginBtn">
+				      	Click here to login as Admin
 	                    </a>
 	                </div>
 	            </div>

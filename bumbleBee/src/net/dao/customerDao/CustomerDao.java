@@ -12,4 +12,5 @@ public interface CustomerDao {
 	public List<Customer> getAllCustomers();
 	public Customer searchCustomer(String userName);
 	public boolean checkCustomerByUserNameAndPassword(String userName,String password);
+	public String generateCustomerId();
 }

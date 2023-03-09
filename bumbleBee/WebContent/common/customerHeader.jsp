@@ -195,7 +195,7 @@
 		                </div>
 		            </a>
 		
-		            <a href="<%=request.getContextPath()%>/login/login.jsp" id="logoutBtn" class="d-lg-block position-relative w-50 h-100 d-flex align-items-center justify-content-center"">
+		            <a href="<%=request.getContextPath()%>/login/customerLogin.jsp" id="logoutBtn" class="d-lg-block position-relative w-50 h-100 d-flex align-items-center justify-content-center"">
 		                <div class="logout position-absolute text-center w-100 h-100 d-flex align-items-center justify-content-center"">
 		                    <i class="fas fa-sign-out-alt text-white fs-3 position-absolute"></i>
 		                </div>

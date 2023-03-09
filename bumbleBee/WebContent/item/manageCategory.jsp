@@ -1,3 +1,5 @@
+<%@page import="net.dao.CategoryDao.impl.CategoryDaoImpl"%>
+<%@page import="net.dao.CategoryDao.CategoryDao"%>
 <%@page import="net.model.Category"%>
 <%@page language="java" import="java.util.*" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -38,8 +40,12 @@
 		                    <div class="row position-relative" style="top: 0;">
 		                        <div class="col-6 col-sm-6 col-md position-relative">
 		                            <div class="form-floating position-relative">
+		                            	<%
+	                                        CategoryDao dao = new CategoryDaoImpl();
+	                                		String categoryCode = dao.generateCategoryCode();
+	                                		System.out.println("Category Code = "+categoryCode);%>
 		                                <input type="text" class="form-control bg-transparent border-3 w-100"
-		                                       id="categoryIdInManageCategory" name="categoryIdInManageCategory" placeholder="Category ID" style="height: 40px;">
+		                                       id="categoryIdInManageCategory" name="categoryIdInManageCategory" placeholder="Category ID" style="height: 40px;" value=<%=categoryCode%>>
 		                                <label for="categoryIdInManageCategory" id="categoryIdLblInCategory"><span>Category ID</span></label>
 		                            </div>
 		                        </div>

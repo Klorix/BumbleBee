@@ -118,4 +118,35 @@ public class ItemDaoImpl implements ItemDao{
 		return null;
 	}
 
+	@Override
+	public String generateItemCode() {
+		try (Connection connection = JDBCUtils.getConnection();
+				// Step 2:Create a statement using connection object
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT productId from Product order by productId DESC LIMIT 1")) {
+			System.out.println(preparedStatement);
+			ResultSet rst = preparedStatement.executeQuery();
+			if(rst.next()) {
+				int temp = Integer.parseInt(rst.getString(1).split("-")[1]);
+				temp = temp+1;
+				if(temp<=9) {
+					System.out.println("C-00"+temp);
+					return "P-00"+temp;
+				}else if(temp<=99) {
+					System.out.println("C-0"+temp);
+					return "P-0"+temp;
+				}else {
+					System.out.println("C-"+temp);
+					return "P-"+temp;
+				}
+			}else {
+				return "P-001";
+			}
+			// Step 3: Execute the query or update query
+		} catch (SQLException e) {
+			// process sql exception
+			JDBCUtils.printSQLException(e);
+		}
+		return null;
+	}
+
 }

@@ -15,19 +15,14 @@ import net.dao.customerDao.impl.CustomerDAOImpl;
 
 
 
-@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/adminLogin")
+public class AdminLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private CustomerDao dao;
-
-	public void init() {
-		dao = new CustomerDAOImpl();
-	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		//response.sendRedirect("login/login.jsp");
-		response.sendRedirect("login/login.jsp");
+		response.sendRedirect("login/adminlogin.jsp");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -41,15 +36,11 @@ public class LoginServlet extends HttpServlet {
 		System.out.println(username);
 		System.out.println(password);
 		
-		if(dao.checkCustomerByUserNameAndPassword(username, password)) {
-			request.setAttribute("loggedUser", username);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("order/order.jsp");
-			dispatcher.forward(request, response);
-		}else if(username.equals("admin") && password.equals("admin")){
+		if(username.equals("admin") && password.equals("admin")){
 			RequestDispatcher dispatcher = request.getRequestDispatcher("admin/adminDashboard.jsp");
 			dispatcher.forward(request, response);
 		}else {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("login/login.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("login/adminLogin.jsp");
 			dispatcher.forward(request, response);
 		}
 	}

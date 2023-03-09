@@ -105,4 +105,35 @@ public class BrandDaoImpl implements BrandDao{
 		return null;
 	}
 
+	@Override
+	public String generateBrandId() {
+		try (Connection connection = JDBCUtils.getConnection();
+				// Step 2:Create a statement using connection object
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT brandId from Brand order by brandId DESC LIMIT 1")) {
+			System.out.println(preparedStatement);
+			ResultSet rst = preparedStatement.executeQuery();
+			if(rst.next()) {
+				int temp = Integer.parseInt(rst.getString(1).split("-")[1]);
+				temp = temp+1;
+				if(temp<=9) {
+					System.out.println("C-00"+temp);
+					return "B-00"+temp;
+				}else if(temp<=99) {
+					System.out.println("C-0"+temp);
+					return "B-0"+temp;
+				}else {
+					System.out.println("C-"+temp);
+					return "B-"+temp;
+				}
+			}else {
+				return "B-001";
+			}
+			// Step 3: Execute the query or update query
+		} catch (SQLException e) {
+			// process sql exception
+			JDBCUtils.printSQLException(e);
+		}
+		return null;
+	}
+
 }

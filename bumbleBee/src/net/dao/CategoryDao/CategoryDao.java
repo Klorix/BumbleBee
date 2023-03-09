@@ -10,4 +10,5 @@ public interface CategoryDao {
 	public boolean deleteCategory(String id);
 	public List<Category> getCategoryDetails();
 	public Category searchCategoryByName(String name);
+	public String generateCategoryCode();
 }

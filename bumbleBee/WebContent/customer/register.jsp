@@ -1,3 +1,5 @@
+	<%@page import="net.dao.customerDao.CustomerDao"%>
+<%@page import="net.dao.customerDao.impl.CustomerDAOImpl"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -127,7 +129,7 @@
  <main>
 	<section id="signupSection" class="Signup container-fluid position-relative" >
 		<div class="container-fluid position-absolute shadow">
-			<a href="<%=request.getContextPath()%>/login/login.jsp" id="logoutBtnInSignup" style="width:5%;height:80%;top:0;bottom:0;margin:auto;right:2%;position:absolute">
+			<a href="<%=request.getContextPath()%>/login/customerLogin.jsp" id="logoutBtnInSignup" style="width:5%;height:80%;top:0;bottom:0;margin:auto;right:2%;position:absolute">
 	            <div class="logout position-absolute d-block d-lg-block position-relative w-100 h-100" >
 	                <i class="fas fa-sign-out-alt text-black fs-1 position-absolute"></i>
 	            </div>
@@ -135,7 +137,6 @@
 		</div>
         <div class="container-fluid position-absolute shadow">
             <div class="container">
-            	<form method="POST">
 	            	<div class="row position-absolute"
 	                     style="top: 10%;left: 0;right: 0;margin: auto;width: 800px;height: 60%;position:relative'">
 	                    <div class="row" style="left: 0;right: 0;margin: auto;height:30%">
@@ -143,8 +144,12 @@
 	                            <div class="form-floating position-relative shadow">
 	                            	<label id="signUpIdLbl" for="signUpId" class="position-relative"><span
 	                                        style="width: 100%;">Id</span></label>
+	                                        <%
+	                                        CustomerDao dao = new CustomerDAOImpl();
+	                                		String customerId = dao.generateCustomerId();
+	                                		System.out.println("Customer ID = "+customerId);%>
 	                            	<input type="text" class="form-control bg-transparent" id="signUpId" name="signUpId" placeholder="Id"
-	                                       style="height: 50px;">
+	                                       style="height: 50px;" disabled="true" value=<%=customerId %>>
 	                                
 	                            </div>
 	                        </div>
@@ -162,7 +167,7 @@
 	                            <div class="form-floating position-relative shadow">
 	                            	<label id="signUpDOBLbl" for="signUpDob" class="position-relative"><span
 	                                        style="width: 100%;">Date of Birth</span></label>
-	                                <input type="text" class="form-control bg-transparent" id="signUpDob" name="signUpDob" placeholder="Date of Birth"
+	                                <input type="date" class="form-control bg-transparent" id="signUpDob" name="signUpDob" placeholder="Date of Birth"
 	                                       style="height: 50px;">
 	                            </div>
 	                        </div>
@@ -213,11 +218,10 @@
 	                <div class="row position-absolute"
 	                     style="top: 75%;left: 0;right: 0;margin: auto;width: 800px;height: max-content;">
 	                    <div class="col-6 col-sm-6 col-md">
-	                        <button id="addSignupDetailsBtn" class="btn btn-outline-success" style="width: 100%;" type="submit" formaction="<%=request.getContextPath()%>/registerCustomer" formmethod="post">Add
+	                        <button id="addSignupDetailsBtn" class="btn btn-outline-success" style="width: 100%;" >Add
 	                        </button>
 	                    </div>
 	                </div>
-            	</form>
                 
             </div>
         </div>
@@ -226,9 +230,8 @@
 </body>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script>
-	var cusIdPattern = /^(C-)[0-9]{3}$/;
+
 	var cusNamePattern = /^[A-z ]+$/;
-	var cusDobPattern = /^[0-9]{4}[-][0-9]{2}[-][0-9]{2}$/;
 	var cusContactPattern = /^[0-9]{10}$/;
 	var cusUserNamePattern = /^([A-z]{3,}[.]*[A-z]*[0-9]*[@]?((gmail.com)|(yahoo.com)?))$/;
 	var cusPasswordPattern = /^([A-z0-9]{3,}[.]*[A-z0-9]*[@]?)$/;
@@ -242,9 +245,7 @@
 	var cusPassword = $('#signUpPassword');
 	var cusAddress = $('#signUpAddress');	
 
-	var cusIdLbl = $('#signUpIdLbl span');
 	var cusNameLbl = $('#signUpNameLbl span');
-	var cusDobLbl = $('#signUpDOBLbl span');
 	var cusContactNoLbl = $('#signUpContactNoLbl span');
 	var cusUserNameLbl = $('#signUpUserNameLbl span');
 	var cusPasswordLbl = $('#signUpPasswordLbl span');
@@ -252,33 +253,12 @@
 
 	var saveBtn = $("#addSignupDetailsBtn");
 	
-	var cusInputsArr = [cusId, cusName,cusDob, cusContactNo, cusUserName, cusPassword,cusAddress];
+	var cusInputsArr = [cusName, cusContactNo, cusUserName, cusPassword,cusAddress];
 
-	cusId.off('keyup');
-	cusId.keyup(function (e) {
-	    console.log("cusId keyUp")
-	    let index = 0;
-	    if (validate(cusIdPattern, cusInputsArr, index, e, saveBtn) == true) {
-	        cusIdLbl.text("Id");
-	    } else {
-	        cusIdLbl.text("Please use (C-001)");
-	    }
-	})
-	cusDob.off('keyup');
-	cusDob.keyup(function (e) {
-	    let index = 2;
-	    if (validate(cusDobPattern, cusInputsArr, index, e, saveBtn) == true) {
-	    	cusDobLbl.css('font-size', 'unset');
-	    	cusDobLbl.text("Name");
-	    } else {
-	    	cusDobLbl.css('font-size', '12px');
-	    	cusDobLbl.text("Please use (2023-01-01)");
-	    }
-	})
 	
 	cusName.off('keyup');
 	cusName.keyup(function (e) {
-	    let index = 1;
+	    let index = 0;
 	    if (validate(cusNamePattern, cusInputsArr, index, e, saveBtn) == true) {
 	        cusNameLbl.css('font-size', 'unset');
 	        cusNameLbl.text("Name");
@@ -289,7 +269,7 @@
 	})
 	cusContactNo.off('keyup');
 	cusContactNo.keyup(function (e) {
-	    let index = 3;
+	    let index = 1;
 	    if (validate(cusContactPattern, cusInputsArr, index, e, saveBtn) == true) {
 	    	cusContactNoLbl.text("Contact No");
 	    } else {
@@ -299,7 +279,7 @@
 	
 	cusUserName.off('keyup');
 	cusUserName.keyup(function (e) {
-	    let index = 4;
+	    let index =2;
 	    if (validate(cusUserNamePattern, cusInputsArr, index, e, saveBtn) == true) {
 	    	cusUserNameLbl.text("User Name");
 	    } else {
@@ -309,7 +289,7 @@
 	
 	cusPassword.off('keyup');
 	cusPassword.keyup(function (e) {
-	    let index = 5;
+	    let index = 3;
 	    if (validate(cusPasswordPattern, cusInputsArr, index, e, saveBtn) == true) {
 	    	cusPasswordLbl.text("User Name");
 	    } else {
@@ -318,7 +298,7 @@
 	})
 	cusAddress.off('keyup');
 	cusAddress.keyup(function (e) {
-	    let index = 6;
+	    let index = 4;
 	    if (validate(cusAddressPattern, cusInputsArr, index, e, saveBtn) == true) {
 	    	cusAddressLbl.text("Address");
 	    } else {
@@ -342,9 +322,43 @@
 	}
 
 	saveBtn.off('click');
-	saveBtn.click(function () {
-		var msg = "<%=message%>";
-	    alert(msg);
+	saveBtn.click(async function () {
+		await saveCustomer();
 	})
+	async function saveCustomer(){
+				
+				let customer = {
+						signUpId:cusId.val(),
+						signUpName:cusName.val(),
+						signUpDob:cusDob.val(),
+						signUpContactNo:cusContactNo.val(),
+						signUpUserName:cusUserName.val(),
+						signUpPassword:cusPassword.val(),
+						signUpAddress:cusAddress.val()
+				}
+				console.log(customer)
+				let options = {
+	            method: 'POST',
+	            headers: {
+	                'Content-Type': 
+	                    'application/json',
+	                    'Accept': 'application/json'
+	            },
+	            body: JSON.stringify(customer)
+		        }
+		        // Fake api for making post requests
+		        let resJson;
+				let res = await fetch("<%=request.getContextPath()%>/registerCustomer", 
+                        options).then(async response =>{
+				    	resJson = await response.json()
+				        return await response;
+
+				    })
+					console.log(resJson);
+				    if(resJson.success==true){
+					    alert("Customer Saved Successfully");
+					    window.location.href = "<%=request.getContextPath()%>/login/customerLogin.jsp";
+					    }
+			}
 	</script>
 </html>
