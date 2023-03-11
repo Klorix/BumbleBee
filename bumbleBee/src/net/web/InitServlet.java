@@ -22,7 +22,7 @@ public class InitServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException {System.out.println("Initial Login");
 		String action = request.getServletPath();
 		RequestDispatcher dispatcher = request.getRequestDispatcher("login/customerLogin.jsp");
 		dispatcher.forward(request, response);

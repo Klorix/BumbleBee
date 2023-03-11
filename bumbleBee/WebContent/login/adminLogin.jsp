@@ -17,7 +17,9 @@
         <div class="container-fluid shadow"
              style="position: absolute;inset: 0 0 0 0;margin: auto;width: 50%;height: 70%;background-color: rgb(228, 225, 225) !important;border-radius: 20px;">
             <h3 style="position: absolute;left: 0;right: 0;margin: auto;width: max-content;top: 40px;">Bumble bee</h3>
-           
+            
+            <div><img src="/images/Bumblebee.png" alt=""></div>
+            
            <form action="<%=request.getContextPath()%>/adminLogin" method="POST">
 	           <div class="row position-absolute"
 	                 style="top: 25%;left: 0;right: 0;margin: auto;width: 400px;height: max-content;">
