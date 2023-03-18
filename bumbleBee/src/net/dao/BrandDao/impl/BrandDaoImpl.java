@@ -52,7 +52,7 @@ public class BrandDaoImpl implements BrandDao{
 	public boolean deleteBrand(String id) {
 		try (Connection connection = JDBCUtils.getConnection();
 				// Step 2:Create a statement using connection object
-				PreparedStatement preparedStatement = connection.prepareStatement("DELETE Brand where brandId=?")) {
+				PreparedStatement preparedStatement = connection.prepareStatement("DELETE from Brand where brandId=?")) {
 			preparedStatement.setString(1, id);
 			
 			System.out.println(preparedStatement);

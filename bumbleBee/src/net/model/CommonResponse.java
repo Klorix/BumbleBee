@@ -1,8 +1,7 @@
-package net.utils;
-
-public class PlaceOrderResponse {
+package net.model;
+public class CommonResponse {
 	private boolean success;
-	public PlaceOrderResponse(boolean success) {
+	public CommonResponse(boolean success) {
 		super();
 		this.success = success;
 	}
@@ -17,7 +16,7 @@ public class PlaceOrderResponse {
 
 	@Override
 	public String toString() {
-		return "PlaceOrderResponse [success=" + success + "]";
+		return "CommonResponse [success=" + success + "]";
 	}
 	
 }

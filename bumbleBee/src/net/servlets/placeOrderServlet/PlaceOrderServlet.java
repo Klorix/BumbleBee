@@ -19,7 +19,6 @@ import com.google.gson.Gson;
 import net.dao.OrderDao.impl.OrderDaoImpl;
 import net.model.Item;
 import net.model.Order;
-import net.utils.PlaceOrderResponse;
 
 @WebServlet("/placeOrder")
 public class PlaceOrderServlet extends HttpServlet {
@@ -55,9 +54,19 @@ public class PlaceOrderServlet extends HttpServlet {
 	    Order orderObj = new Gson().fromJson(sb.toString(), Order.class);
 	    orderObj.setOrderDate(new Date());
 	    System.out.println(orderObj);
-	    orderDao.placeOrder(orderObj);
-	    if(true) {
-	    	String resp = new Gson().toJson(new PlaceOrderResponse(true));
+	    if(orderDao.placeOrder(orderObj)) {
+	    	String resp = new Gson().toJson(new net.model.CommonResponse(true));
+	    	// Write content type and also length (determined via byte array).
+	    	RequestDispatcher dispatcher = request.getRequestDispatcher("order/order.jsp");
+	    	response.setContentType("application/json");
+	    	response.setHeader("Body", resp);
+	    	PrintWriter out = response.getWriter();
+	        response.setContentType("application/json");
+	        response.setCharacterEncoding("UTF-8");
+	        out.print(resp);
+	        out.flush();
+	    }else {
+	    	String resp = new Gson().toJson(new net.model.CommonResponse(false));
 	    	// Write content type and also length (determined via byte array).
 	    	RequestDispatcher dispatcher = request.getRequestDispatcher("order/order.jsp");
 	    	response.setContentType("application/json");

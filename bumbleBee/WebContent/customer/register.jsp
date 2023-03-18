@@ -7,7 +7,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <% String message = (String)request.getAttribute("NOTIFICATION");%>
-<title>Customer Registration</title>
+<title>Customer Register - Bumble Bee</title>
 
 	<link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -358,7 +358,10 @@
 				    if(resJson.success==true){
 					    alert("Customer Saved Successfully");
 					    window.location.href = "<%=request.getContextPath()%>/login/customerLogin.jsp";
+					    }else{
+					    	alert("Please try again. Data must not be empty.");
 					    }
+				    
 			}
 	</script>
 </html>

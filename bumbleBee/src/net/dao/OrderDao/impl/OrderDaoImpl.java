@@ -4,14 +4,19 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.dao.OrderDao.OrderDao;
 import net.dao.OrderDetailsDao.OrderDetailsDao;
 import net.dao.OrderDetailsDao.impl.OrderDetailsDaoImpl;
+import net.dao.customerDao.CustomerDao;
+import net.dao.customerDao.impl.CustomerDAOImpl;
 import net.dao.itemDao.ItemDao;
 import net.dao.itemDao.impl.ItemDaoImpl;
+import net.model.Customer;
 import net.model.Item;
 import net.model.Order;
 import net.model.OrderDetails;
@@ -66,6 +71,32 @@ public class OrderDaoImpl implements OrderDao{
 	            connection.setAutoCommit(true);
 	            return false;
 	        }
+	        CustomerDao cusDao = new CustomerDAOImpl();
+			Customer c = cusDao.searchCustomerById(order.getCustomerId());
+			double loanAmount = order.getLoanAmount();
+			if(loanAmount!=0.0) {
+				LocalDate dob = LocalDate.parse(c.getSignUpDob());
+				LocalDate curDate = LocalDate.now();  
+				if ((dob != null) && (curDate != null))   
+				{  
+				int years = Period.between(dob, curDate).getYears();  
+				if(years<18) {
+						connection.rollback();
+			            connection.setAutoCommit(true);
+			            return false;
+				}else {
+					c.setLoanAmount(String.valueOf(order.getLoanAmount()));	
+					c.setLoanStatus("1");
+					if (!cusDao.updateCustomer(c)) {
+			            connection.rollback();
+			            connection.setAutoCommit(true);
+			            return false;
+			        }
+				}
+				}  
+				
+				
+			}
 	        for (OrderDetails od : order.getOrderDetails()
 	        ) {
 	            OrderDetails orderDetails = new OrderDetails(od.getProductId(), od.getOrderId(), od.getOrderQty(), od.getTotalPrice());
@@ -91,6 +122,9 @@ public class OrderDaoImpl implements OrderDao{
 				connection.setAutoCommit(true);
 	        return true;
 		}catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;

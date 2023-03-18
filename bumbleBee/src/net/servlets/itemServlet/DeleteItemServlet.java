@@ -1,6 +1,8 @@
 package net.servlets.itemServlet;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -9,6 +11,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
 
 import net.dao.itemDao.ItemDao;
 import net.dao.itemDao.impl.ItemDaoImpl;
@@ -25,7 +29,12 @@ public class DeleteItemServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		update(request, response);
+		try {
+			delete(request, response);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -33,23 +42,54 @@ public class DeleteItemServlet extends HttpServlet {
 		response.sendRedirect("register/register.jsp");
 	}
 
-	private void update(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		String id = request.getParameter("productIdInManageItems");
-		System.out.println(id);
+	private void delete(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException {
+		StringBuilder sb = new StringBuilder();
+	    BufferedReader reader = request.getReader();
 	    try {
-			if(itemDao.deleteItem(id) == true) {
-				request.setAttribute("NOTIFICATION", "Item Deleted Successfully!");
-				getAllItems(request);
-			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    RequestDispatcher dispatcher = request.getRequestDispatcher("item/manageItem.jsp");
-		dispatcher.forward(request, response);
-	}
-	public void getAllItems(HttpServletRequest request) {
-		List<Item>items = itemDao.getAllItems();
-		request.setAttribute("itemDetails", items);
+	        String line;
+	        while ((line = reader.readLine()) != null) {
+	            sb.append(line).append('\n');
+	        }
+	    } finally {
+	        reader.close();
+	    }
+	    Item item = new Gson().fromJson(sb.toString(), Item.class);
+	    System.out.println("item Obj : "+item);
+	    if(!item.getId().isEmpty()) {
+	    	if(itemDao.deleteItem(item.getId())) {
+		    	String resp = new Gson().toJson(new net.model.CommonResponse(true));
+		    	// Write content type and also length (determined via byte array).
+		    	RequestDispatcher dispatcher = request.getRequestDispatcher("item/manageItem.jsp");
+		    	response.setContentType("application/json");
+		    	response.setHeader("Body", resp);
+		    	PrintWriter out = response.getWriter();
+		        response.setContentType("application/json");
+		        response.setCharacterEncoding("UTF-8");
+		        out.print(resp);
+		        out.flush();
+		    }else {
+		    	String resp = new Gson().toJson(new net.model.CommonResponse(false));
+		    	// Write content type and also length (determined via byte array).
+		    	RequestDispatcher dispatcher = request.getRequestDispatcher("item/manageItem.jsp");
+		    	response.setContentType("application/json");
+		    	response.setHeader("Body", resp);
+		    	PrintWriter out = response.getWriter();
+		        response.setContentType("application/json");
+		        response.setCharacterEncoding("UTF-8");
+		        out.print(resp);
+		        out.flush();
+		    }
+	    }else {
+	    	String resp = new Gson().toJson(new net.model.CommonResponse(false));
+	    	// Write content type and also length (determined via byte array).
+	    	RequestDispatcher dispatcher = request.getRequestDispatcher("item/manageItem.jsp");
+	    	response.setContentType("application/json");
+	    	response.setHeader("Body", resp);
+	    	PrintWriter out = response.getWriter();
+	        response.setContentType("application/json");
+	        response.setCharacterEncoding("UTF-8");
+	        out.print(resp);
+	        out.flush();
+	    }
 	}
 }

@@ -52,7 +52,7 @@ public class CategoryDaoImpl implements CategoryDao{
 	public boolean deleteCategory(String id) {
 		try (Connection connection = JDBCUtils.getConnection();
 				// Step 2:Create a statement using connection object
-				PreparedStatement preparedStatement = connection.prepareStatement("DELETE Category where categoryId=?")) {
+				PreparedStatement preparedStatement = connection.prepareStatement("DELETE from Category where categoryId=?")) {
 			preparedStatement.setString(1, id);
 			
 			System.out.println(preparedStatement);

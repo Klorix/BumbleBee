@@ -8,14 +8,10 @@
 <html>
 	<head>
 		<meta charset="ISO-8859-1">
-		<title>Insert title here</title>
-		<link rel="stylesheet"
-			href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-			integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-			crossorigin="anonymous">
+		<title>Manage Category - Bumble Bee</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 			
-			<link rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 			
 			<style>
 				body {
@@ -34,8 +30,7 @@
 		<section class="ManageCategory container-fluid position-relative d-flex align-items-center justify-content-center"
 	             style="width: 100%;height: 95vh;top:0;" id="manageItemsSection">
 	        <div class="row position-relative d-flex" style="width: 100%;height:90%;">
-	        	<form class="row container position-relative" style="top: 0;left: 0;right:0;margin: auto; width: 80%;height:30%;">
-	        		<div class="row container position-relative" style="top: 0;left: 0;right:0;margin: auto; width: 100%;height:100%;">
+	        		<div class="row container position-relative" style="top: 0;left: 0;right:0;margin: auto; width: 80%;height:30%;">
 		                <div class="col position-relative">
 		                    <div class="row position-relative" style="top: 0;">
 		                        <div class="col-6 col-sm-6 col-md position-relative">
@@ -66,14 +61,14 @@
 		                <div class="col-sm-6 col-md-3 position-relative">
 		                    <div class="col-11 position-absolute" style="top: 0;bottom: 0;left:0;right:0;margin: auto;">
 		                        <button id="saveCategory" class="btn btn-outline-success position-absolute"
-		                                style="top: 0;bottom: 0;margin: auto;height: 40px; width: 100%;"  type="submit" formaction="<%=request.getContextPath()%>/saveCategory" formmethod="post">Add Category
+		                                style="top: 0;bottom: 0;margin: auto;height: 40px; width: 100%;">Add Category
 		                        </button>
 		                    </div>
 		                </div>
 		                <div class="col-sm-6 col-md-3 position-relative">
 		                    <div class="col-11 position-absolute" style="top: 0;bottom: 0;left:0;right:0;margin: auto;">
 		                        <button class="btn btn-outline-secondary position-absolute"
-		                                style="top: 0;bottom: 0;margin: auto;height: 40px;width: 100%;" id="updateCategoryBtn"  type="submit" formaction="<%=request.getContextPath()%>/updateCategory" formmethod="post">
+		                                style="top: 0;bottom: 0;margin: auto;height: 40px;width: 100%;" id="updateCategoryBtn">
 		                            Update Category
 		                        </button>
 		                    </div>
@@ -81,18 +76,17 @@
 		                <div class="col-sm-6 col-md-3 position-relative">
 		                    <div class="col-11 position-absolute" style="top: 0;bottom: 0;left:0;right:0;margin: auto;">
 		                        <button class="btn btn-outline-danger position-absolute"
-		                                style="top: 0;bottom: 0;margin: auto;height: 40px;width: 100%;" id="deleteCategoryBtn"  type="submit" formaction="<%=request.getContextPath()%>/deleteCategory" formmethod="post">
+		                                style="top: 0;bottom: 0;margin: auto;height: 40px;width: 100%;" id="deleteCategoryBtn">
 		                            Delete Category
 		                        </button>
 		                    </div>
 		                </div>
 		            </div>
-	        	</form>
 	            
 	            <div class="row position-relative border-5 shadow"
 	                 style="left: 0;right: 0;margin: auto;height: 330px;width: 93%;">
-	                <div class="col position-relative h-100 w-100 d-flex align-items-center justify-content-center" style="height: 100%;overflow:auto;width:100%;">
-	                    <table class="table table-striped table-responsive table-hover shadow position-absolute start-0 end-0 m-auto " style="width:80%">
+	                <div class="col bg-light position-relative" style="height: 100%;overflow: auto;">
+	                    <table class="table table-hover">
 	                        <thead>
 	                        <tr>
 	                            <th scope="col">#</th>
@@ -100,19 +94,7 @@
 	                            <th scope="col">Brand Name</th>
 	                        </tr>
 	                        </thead>
-	                        <tbody>
-	                        	<%Iterator itr;%>
-								<% List<Category> data= (List)request.getAttribute("categoryDetails");
-								System.out.println(data);
-								if(data!=null) {
-									int count = 1;
-									for (Category c : data){%>
-									<tr>
-									<td width="10"><%=count++%></td>
-									<td width="50%"><%=c.getCategoryId()%></td>
-									<td width="60%"><%=c.getCategoryName()%></td>
-									</tr>
-								<%}}%>
+	                        <tbody id="manageCategoryDetailsTbl">
 	                        </tbody>
 	                    </table>
 	                </div>
@@ -171,6 +153,156 @@
 	    }
 	    return false;
 	}
-			
+	window.addEventListener("load", async(event) => {
+		console.log("page is fully loaded");
+		await generateId();
+		await getAllItems();
+		});
+
+	async function generateId(){
+		 let options = {
+		            method: 'GET',
+		            headers: {
+		                'Content-Type': 
+		                    'text/html',
+		                    'Accept': 'text/html'
+		 			}
+	       }
+	       let id = null;
+		    let resJson = await fetch("<%=request.getContextPath()%>/saveCategory", 
+                   options).then(async response =>{
+                       id = await response.text();
+			        return await response;
+
+			    })
+				
+		    console.log("Response = ",resJson.status);
+			    if(resJson.status==200){
+			    	console.log("Category Id = ",id);
+			    	productCategory.val(id);
+					productCategoryName.val("");
+				    }
+		return resJson;
+	}
+	saveBtn.click(async function(){
+		let category = {
+				categoryId:productCategory.val(),
+				categoryName:productCategoryName.val()
+		}
+		console.log("Category Req = ",category)
+		let options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 
+                'application/json',
+                'Accept': 'application/json'
+        },
+        body: JSON.stringify(category)
+        }
+        // Fake api for making post requests
+        let resJson;
+		let res = await fetch("<%=request.getContextPath()%>/saveCategory", 
+                options).then(async response =>{
+		    	resJson = await response.json()
+		        return await response;
+
+		    })
+			console.log(resJson);
+		    if(resJson.success==true){
+			    alert("Category Saved Successfully");
+			    await generateId();
+			    await getAllItems();
+			    }else{
+			    	alert("Please try again.");
+			    }
+	})	
+	updateBtn.click(async function(){
+		let category = {
+				categoryId:productCategory.val(),
+				categoryName:productCategoryName.val()
+		}
+		console.log("Category Req = ",category)
+		let options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 
+                'application/json',
+                'Accept': 'application/json'
+        },
+        body: JSON.stringify(category)
+        }
+        // Fake api for making post requests
+        let resJson;
+		let res = await fetch("<%=request.getContextPath()%>/updateCategory", 
+                options).then(async response =>{
+		    	resJson = await response.json()
+		        return await response;
+
+		    })
+			console.log(resJson);
+		    if(resJson.success==true){
+			    alert("Category Updated Successfully");
+			    await generateId();
+			    await getAllItems();
+			    }else{
+			    	alert("Please try again.");
+			    }
+	})	
+	deleteBtn.click(async function(){
+		let category = {
+				categoryId:productCategory.val(),
+				categoryName:null
+		}
+		console.log("Category Req = ",category)
+		let options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 
+                'application/json',
+                'Accept': 'application/json'
+        },
+        body: JSON.stringify(category)
+        }
+        // Fake api for making post requests
+        let resJson;
+		let res = await fetch("<%=request.getContextPath()%>/deleteCategory", 
+                options).then(async response =>{
+		    	resJson = await response.json()
+		        return await response;
+
+		    })
+			console.log(resJson);
+		    if(resJson.success==true){
+			    alert("Category Deleted Successfully");
+			    await generateId();
+			    await getAllItems();
+			    }else{
+			    	alert("Please try again.");
+			    }
+	})	
+	async function getAllItems(){
+		let options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 
+                'application/json',
+                'Accept': 'application/json'
+        },
+        }
+        // Fake api for making post requests
+        let resJson;
+		let res = await fetch("<%=request.getContextPath()%>/categoryDetails", 
+                options).then(async response =>{
+		    	resJson = await response.json()
+		        return await response;
+
+		    })
+			console.log(resJson);
+		$("#manageCategoryDetailsTbl").empty();
+		for (let i = 0; i < resJson.length; i++) {
+            	$("#manageCategoryDetailsTbl").append("<tr><td>" + (i + 1) + "</td><td>" + resJson[i].categoryId + "</td><td>" + resJson[i].categoryName + "</td></tr>");
+            
+        }
+		}		
 	</script>
 </html>

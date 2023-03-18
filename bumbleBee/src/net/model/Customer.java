@@ -93,19 +93,17 @@ public class Customer {
 		this.signUpAddress = signUpAddress;
 	}
 
-	private String getLoanStatus() {
+	public String getLoanStatus() {
 		return loanStatus;
 	}
 
-	private void setLoanStatus(String loanStatus) {
+	public void setLoanStatus(String loanStatus) {
 		this.loanStatus = loanStatus;
 	}
-
-	private String getLoanAmount() {
+	public String getLoanAmount() {
 		return loanAmount;
 	}
-
-	private void setLoanAmount(String loanAmount) {
+	public void setLoanAmount(String loanAmount) {
 		this.loanAmount = loanAmount;
 	}
 

@@ -14,7 +14,7 @@
 <html>
 	<head>
 		<meta charset="ISO-8859-1">
-		<title>Insert title here</title>
+		<title>Place Order - Bumble Bee</title>
 		<link rel="stylesheet"
 			href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 			integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -123,7 +123,7 @@
 	                                <label for="itemUnitPriceHome"><span>Unit Price</span></label>
 	                            </div>
 	                            
-	                            <div class="form-floating position-relative" style="top: 16%;height:20%">
+	                             <div class="form-floating position-relative" style="top: 16%;height:20%">
 	                                <input type="tel" class="form-control  bg-transparent" id="itemQtyOnHandHome" name="itemQtyOnHandHome"
 	                                       placeholder="Qty On Hand" style="height: 40px;width: 100%;">
 	                                <label for="itemQtyOnHandHome" style="width: 100%;"><span
@@ -315,30 +315,49 @@
 			function addToCart(){
 				var itmQtyOnHand =document.getElementById("itemQtyOnHandHome").value;
 				console.log("Qty On Hand = ",parseInt(itmQtyOnHand));
-				var subTotal = parseInt(itmQtyOnHand)*parseInt(itemUnitPrice.value);
-				console.log("Sub Total = ",subTotal);
-				orderSubTotal = document.getElementById("orderSubTotal");
-				orderSubTotal.value=subTotal;
-				orderTotal+=subTotal;
-				console.log("Order Total = ",orderTotal)
-				orderTotalInHome.value=orderTotal;
-				if(orderTotal>15000){
-					loanAmountInHome.value = "Loan Entry Exceded";
-				}
-				qtyLeft = parseInt(itemQtyHome.value)-parseInt(itmQtyOnHand);
-				itemQty.value = qtyLeft;
-				addToCartObj = {
-						customerId:document.getElementById("customerIdHome").value,
-						productCode:document.getElementById("itemProductHome").value,
-						description:document.getElementById("itemDescriptionHome").value,
-						qtyOnHand:parseInt(itmQtyOnHand),
-						unitPrice:parseInt(itemUnitPrice.value),
-						total:subTotal
-				}
-				addToCartArr.push(addToCartObj);
-				console.log(addToCartObj)
+				console.log("Qty = ",parseInt(itemQtyHome.value));
+				if(parseInt(itmQtyOnHand)>parseInt(itemQtyHome.value)){
+					alert("Item Qty is less than Qty On Hand. Please Try Again");
+					clearFields();
+				}else{
+					var subTotal = parseInt(itmQtyOnHand)*parseInt(itemUnitPrice.value);
+					console.log("Sub Total = ",subTotal);
+					orderSubTotal = document.getElementById("orderSubTotal");
+					orderSubTotal.value=subTotal;
+					orderTotal+=subTotal;
+					console.log("Order Total = ",orderTotal)
+					orderTotalInHome.value=orderTotal;
+					if(orderTotal>15000){
+						loanAmountInHome.value = "Loan Entry Exceded";
+						clearFields();
+					}
+					qtyLeft = parseInt(itemQtyHome.value)-parseInt(itmQtyOnHand);
+					itemQty.value = qtyLeft;
+					if((document.getElementById("customerIdHome").value!=null |
+							document.getElementById("customerIdHome").value!="")&&
+							(document.getElementById("itemProductHome").value!=null |
+									document.getElementById("itemProductHome").value!="")
+									&&(document.getElementById("itemDescriptionHome").value!=null |
+											document.getElementById("itemDescriptionHome").value!="")&&(itmQtyOnHand!=null |
+													itmQtyOnHand!="")&&(itemUnitPrice.value!=null |
+															itemUnitPrice.value!="")&&(subTotal!=null |
+																	subTotal!="")){
+						
+					}
+					addToCartObj = {
+							customerId:document.getElementById("customerIdHome").value,
+							productCode:document.getElementById("itemProductHome").value,
+							description:document.getElementById("itemDescriptionHome").value,
+							qtyOnHand:parseInt(itmQtyOnHand),
+							unitPrice:parseInt(itemUnitPrice.value),
+							total:subTotal
+					}
+					addToCartArr.push(addToCartObj);
+					console.log(addToCartObj)
 
-				addDetailsToAddToCartTbl();
+					addDetailsToAddToCartTbl();
+				}
+				
 			}
 
 			orderCashRecieved.addEventListener('keyup', (event) => {
@@ -440,6 +459,9 @@
 					}	
 					orderDetailsArr.push(orderDetailsObj)
 				})
+				if(addToCartArr.length === 0){
+				alert('Please try again.')	
+				}else{
 				
 				let order = {
 						orderId:orderIdHome.value,
@@ -472,19 +494,26 @@
 					    alert("Order Placed Successfully");
 						await generateOrderId();
 					    clearFields();
-					    }
+					    addToCartArr.splice(0, addToCartArr.length);
+					    }else{
+					    	 alert("Please Try Again. You're not elligible for applying loan.");
+								await generateOrderId();
+							    clearFields();
+							    addToCartArr.splice(0, addToCartArr.length);
+					    }}
 			}
 
 			function clearFields(){
+				console.log('clear fields in order')
 				orderTotalInHome.value = "";
 				loanAmountInHome.value = "";
 				tbody.innerHTML = "";
 				orderCashRecieved.value="";
-				document.getElementById("itemDescriptionHome").value="";
-				document.getElementById("itemQtyOnHandHome").value="";
-				document.getElementById("itemQtyHome").value="";
+				$("#itemDescriptionHome").val("");
+				$("#itemQtyOnHandHome").val("");
+				$("#itemQtyHome").val("");
 				orderSubTotal.value="";
-				document.getElementById("orderMonthlyInterest").value="";
+				$("#orderMonthlyInterest").val("");
 				orderTotalInHome.value="";
 				itemUnitPrice.value="";
 				orderMonthlyInstallment.value="";
@@ -492,6 +521,7 @@
 
 			function discard(){
 				clearFields();
+				addToCartArr.splice(0, addToCartArr.length);
 			}
 
 			var itemQtyOnHandPattern = /^[0-9]+$/;
@@ -532,5 +562,10 @@
 			    }
 			    return false;
 			}
+			
+			$("#clearCartBtn").click(function(){
+				clearFields();
+				addToCartArr.splice(0, addToCartArr.length);
+			})
 	</script>
 </html>

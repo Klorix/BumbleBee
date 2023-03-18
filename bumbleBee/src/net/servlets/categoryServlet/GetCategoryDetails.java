@@ -1,7 +1,9 @@
-package net.servlets.itemServlet;
+package net.servlets.categoryServlet;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -13,34 +15,38 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import net.dao.itemDao.ItemDao;
-import net.dao.itemDao.impl.ItemDaoImpl;
+import net.dao.BrandDao.BrandDao;
+import net.dao.BrandDao.impl.BrandDaoImpl;
+import net.dao.CategoryDao.CategoryDao;
+import net.dao.CategoryDao.impl.CategoryDaoImpl;
+import net.model.Brand;
+import net.model.Category;
 import net.model.Item;
+import net.model.Order;
 
-@WebServlet("/itemDetails")
-public class ItemDetailsServlet extends HttpServlet {
+@WebServlet("/categoryDetails")
+public class GetCategoryDetails extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ItemDao itemDao;
+	private CategoryDao dao;
 
 	public void init() {
-		itemDao = new ItemDaoImpl();
+		dao = new CategoryDaoImpl();
 	}
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		getAllItems(request,response);
-		/*RequestDispatcher dispatcher = request.getRequestDispatcher("item/itemDetails.jsp");
-		dispatcher.forward(request, response);*/
+		getAllCategories(request,response);
 	}
 
-	public void getAllItems(HttpServletRequest request,HttpServletResponse response) {
-		List<Item>items = itemDao.getAllItems();
+	
+	public void getAllCategories(HttpServletRequest request,HttpServletResponse response) {
+		List<Category>categories = dao.getCategoryDetails();
 		response.setContentType("text/html");
 		try {
-			String resp = new Gson().toJson(items);
+			String resp = new Gson().toJson(categories);
 	    	// Write content type and also length (determined via byte array).
-	    	RequestDispatcher dispatcher = request.getRequestDispatcher("item/manageItem.jsp");
+	    	RequestDispatcher dispatcher = request.getRequestDispatcher("item/manageCategory.jsp");
 	    	response.setContentType("application/json");
 	    	response.setHeader("Body", resp);
 	    	PrintWriter out = response.getWriter();
@@ -54,4 +60,5 @@ public class ItemDetailsServlet extends HttpServlet {
 		}
 //		request.setAttribute("itemDetails", items);
 	}
+	
 }

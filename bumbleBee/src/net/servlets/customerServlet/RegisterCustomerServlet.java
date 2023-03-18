@@ -17,10 +17,10 @@ import com.google.gson.Gson;
 
 import net.dao.customerDao.CustomerDao;
 import net.dao.customerDao.impl.CustomerDAOImpl;
+import net.model.CommonResponse;
 import net.model.Customer;
 import net.model.Item;
 import net.model.Order;
-import net.utils.PlaceOrderResponse;
 
 @WebServlet("/registerCustomer")
 public class RegisterCustomerServlet extends HttpServlet {
@@ -55,24 +55,40 @@ public class RegisterCustomerServlet extends HttpServlet {
 	        reader.close();
 	    }
 	    Customer c = new Gson().fromJson(sb.toString(), Customer.class);
+	    
 	    System.out.println("Customer Obj = "+c);
-	    try {
-			if(customerDao.saveCustomer(c) == true) {
-				String resp = new Gson().toJson(new PlaceOrderResponse(true));
-		    	// Write content type and also length (determined via byte array).
-		    	RequestDispatcher dispatcher = request.getRequestDispatcher("login/customerLogin.jsp");
-		    	response.setContentType("application/json");
-		    	response.setHeader("Body", resp);
-		    	PrintWriter out = response.getWriter();
-		        response.setContentType("application/json");
-		        response.setCharacterEncoding("UTF-8");
-		        out.print(resp);
-		        out.flush();
+	    if(!c.getSignUpId().isEmpty() && !c.getSignUpName().isEmpty() && !c.getSignUpDob().isEmpty() && !c.getSignUpContactNo().isEmpty() && !c.getSignUpUserName().isEmpty() && !c.getSignUpPassword().isEmpty() && !c.getSignUpAddress().isEmpty()) {
+	    	
+		    try {
+				if(customerDao.saveCustomer(c) == true) {
+					String resp = new Gson().toJson(new CommonResponse(true));
+			    	// Write content type and also length (determined via byte array).
+			    	RequestDispatcher dispatcher = request.getRequestDispatcher("login/customerLogin.jsp");
+			    	response.setContentType("application/json");
+			    	response.setHeader("Body", resp);
+			    	PrintWriter out = response.getWriter();
+			        response.setContentType("application/json");
+			        response.setCharacterEncoding("UTF-8");
+			        out.print(resp);
+			        out.flush();
+				}
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	    }else {
+	    	String resp = new Gson().toJson(new CommonResponse(false));
+	    	// Write content type and also length (determined via byte array).
+	    	RequestDispatcher dispatcher = request.getRequestDispatcher("login/customerLogin.jsp");
+	    	response.setContentType("application/json");
+	    	response.setHeader("Body", resp);
+	    	PrintWriter out = response.getWriter();
+	        response.setContentType("application/json");
+	        response.setCharacterEncoding("UTF-8");
+	        out.print(resp);
+	        out.flush();
+	    }
+	    
 	}
 	public void getAllCustomers(HttpServletRequest request) {
 		List<Customer>customers = customerDao.getAllCustomers();

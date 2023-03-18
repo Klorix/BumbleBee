@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta charset="ISO-8859-1">
-		<title>Insert title here</title>
+		<title>Item Details - Bumble Bee</title>
 		<link rel="stylesheet"
 			href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 			integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -35,8 +35,10 @@
 	            
 	            <div class="row position-relative border-5 shadow"
 	                 style="left: 0;right: 0;margin: auto;height: 100%;width: 93%;">
-	                <div class="col position-relative h-100 w-100 d-flex align-items-center justify-content-center" style="height: 100%;overflow:auto;width:100%;">
-	                    <table class="table table-striped table-responsive table-hover shadow position-absolute start-0 end-0 m-auto w-100 h-100">
+	               <div class="row position-relative border-5 shadow"
+	                 style="left: 0;right: 0;margin: auto;height: 330px;width: 93%;">
+	                <div class="col bg-light position-relative" style="height: 100%;overflow: auto;">
+	                    <table class="table table-hover">
 	                        <thead>
 	                        <tr>
 	                            <th scope="col">#</th>
@@ -45,33 +47,48 @@
 	                            <th scope="col">Qty</th>
 	                            <th scope="col">Unit Price</th>
 	                            <th scope="col">Status</th>
-	                             <th scope="col">Category</th>
-	                              <th scope="col">Brand</th>
+	                            <th scope="col">Category</th>
+	                            <th scope="col">Brand</th>
 	                        </tr>
 	                        </thead>
-	                        <tbody>
-	                        	<%Iterator itr;%>
-								<% List<Item> data= (List)request.getAttribute("itemDetails");
-								System.out.println(data);
-								if(data!=null) {
-									int count = 1;
-									for (Item i : data){%>
-									<tr>
-									<td width="12.5%"><%=count++%></td>
-									<td width="12.5%"><%=i.getId()%></td>
-									<td width="12.5%"><%=i.getName()%></td>
-									<td width="12.5%"><%=i.getQty()%></td>
-									<td width="12.5%"><%=i.getUnitPrice()%></td>
-									<td width="12.5%"><%=i.getStatus()%></td>
-									<td width="12.5%"><%=i.getCategory()%></td>
-									<td width="12.5%"><%=i.getBrand()%></td>
-									</tr>
-								<%}}%>
+	                        <tbody id="itemDetailsTblBody">
 	                        </tbody>
 	                    </table>
 	                </div>
 	            </div>
+	            </div>
 	        </div>
 	    </section>
 	</body>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script>
+	window.addEventListener("load", async(event) => {
+		console.log("page is fully loaded");
+		  await getAllItems();
+		});
+	async function getAllItems(){
+		let options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 
+                'application/json',
+                'Accept': 'application/json'
+        },
+        }
+        // Fake api for making post requests
+        let resJson;
+		let res = await fetch("<%=request.getContextPath()%>/itemDetails", 
+                options).then(async response =>{
+		    	resJson = await response.json()
+		        return await response;
+
+		    })
+			console.log(resJson);
+		$("#itemDetailsTblBody").empty();
+		for (let i = 0; i < resJson.length; i++) {
+            	$("#itemDetailsTblBody").append("<tr><td>" + (i + 1) + "</td><td>" + resJson[i].id + "</td><td>" + resJson[i].name + "</td><td>" + resJson[i].qty + "</td><td>" + resJson[i].unitPrice + "</td><td>" + resJson[i].status + "</td><td>" + resJson[i].category + "</td><td>" + resJson[i].brand + "</td></tr>");
+            
+        }
+		}	
+	</script>
 </html>

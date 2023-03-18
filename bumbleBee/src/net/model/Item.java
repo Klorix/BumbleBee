@@ -5,7 +5,7 @@ public class Item {
 	private String name;
 	private int qty;
 	private double unitPrice;
-	private String status;
+	private int status;
 	private String category;
 	private String brand;
 	
@@ -13,7 +13,7 @@ public class Item {
 	
 	
 
-	public Item(String id, String name, int qty, double unitPrice, String status, String category, String brand) {
+	public Item(String id, String name, int qty, double unitPrice, int status, String category, String brand) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -58,11 +58,11 @@ public class Item {
 		this.unitPrice = unitPrice;
 	}
 
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 

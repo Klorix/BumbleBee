@@ -45,14 +45,16 @@ public class CustomerDAOImpl implements CustomerDao{
 	public boolean updateCustomer(Customer c) throws ClassNotFoundException {
 		try (Connection connection = JDBCUtils.getConnection();
 				// Step 2:Create a statement using connection object
-				PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Customer SET customerName=?,customerDOB=?,customerContactNumber=?,customerUserName=?,password=?,customerAddress=? WHERE customerId=?")) {
+				PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Customer SET customerName=?,customerDOB=?,customerContactNumber=?,customerUserName=?,password=?,customerAddress=?,loanStatus=?,loanAmount=? WHERE customerId=?")) {
 			preparedStatement.setString(1, c.getSignUpName());
 			preparedStatement.setString(2, c.getSignUpDob());
 			preparedStatement.setString(3, c.getSignUpContactNo());
 			preparedStatement.setString(4, c.getSignUpUserName());
 			preparedStatement.setString(5, c.getSignUpPassword());
 			preparedStatement.setString(6, c.getSignUpAddress());
-			preparedStatement.setString(7, c.getSignUpId());		
+			preparedStatement.setInt(7, Integer.parseInt(c.getLoanStatus()));
+			preparedStatement.setDouble(8, Double.parseDouble(c.getLoanAmount()));
+			preparedStatement.setString(9, c.getSignUpId());		
 
 			System.out.println(preparedStatement);
 			// Step 3: Execute the query or update query
@@ -110,8 +112,8 @@ public class CustomerDAOImpl implements CustomerDao{
 			preparedStatement.setString(1, userName);
 			ResultSet rst = preparedStatement.executeQuery();
 			if(rst.next()) {
-				System.out.println("Customer = "+ new Customer(rst.getString(1),rst.getString(2),rst.getString(3),rst.getString(4),rst.getString(5),rst.getString(6),rst.getString(3)).toString());
-				return new Customer(rst.getString(1),rst.getString(2),rst.getString(3),rst.getString(4),rst.getString(5),rst.getString(6),rst.getString(3));
+				System.out.println("Customer = "+ new Customer(rst.getString(1),rst.getString(2),rst.getString(5),rst.getString(4),rst.getString(6),rst.getString(7),rst.getString(3)).toString());
+				return new Customer(rst.getString(1),rst.getString(2),rst.getString(5),rst.getString(4),rst.getString(6),rst.getString(7),rst.getString(3));
 			}
 			
 			System.out.println(preparedStatement);
@@ -166,6 +168,27 @@ public class CustomerDAOImpl implements CustomerDao{
 			}else {
 				return "C-001";
 			}
+			// Step 3: Execute the query or update query
+		} catch (SQLException e) {
+			// process sql exception
+			JDBCUtils.printSQLException(e);
+		}
+		return null;
+	}
+
+	@Override
+	public Customer searchCustomerById(String id) {
+		try (Connection connection = JDBCUtils.getConnection();
+				// Step 2:Create a statement using connection object
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Customer WHERE customerId=?")) {
+			preparedStatement.setString(1, id);
+			ResultSet rst = preparedStatement.executeQuery();
+			if(rst.next()) {
+				System.out.println("Customer = "+ new Customer(rst.getString(1),rst.getString(2),rst.getString(5),rst.getString(4),rst.getString(6),rst.getString(7),rst.getString(3)).toString());
+				return new Customer(rst.getString(1),rst.getString(2),rst.getString(5),rst.getString(4),rst.getString(6),rst.getString(7),rst.getString(3));
+			}
+			
+			System.out.println(preparedStatement);
 			// Step 3: Execute the query or update query
 		} catch (SQLException e) {
 			// process sql exception
